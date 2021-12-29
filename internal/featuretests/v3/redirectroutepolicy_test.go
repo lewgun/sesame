@@ -20,7 +20,7 @@ import (
 
 	envoy_route_v3 "github.com/envoyproxy/go-control-plane/envoy/config/route/v3"
 	envoy_discovery_v3 "github.com/envoyproxy/go-control-plane/envoy/service/discovery/v3"
-	Sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
+	sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
 	envoy_v3 "github.com/projectsesame/sesame/internal/envoy/v3"
 	"github.com/projectsesame/sesame/internal/fixture"
 	v1 "k8s.io/api/core/v1"
@@ -36,14 +36,14 @@ func TestRedirectResponsePolicy_HTTProxy(t *testing.T) {
 	)
 
 	rh.OnAdd(fixture.NewProxy("simple").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{Fqdn: "hello.world"},
-			Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+		sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{Fqdn: "hello.world"},
+			Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: "svc1",
 					Port: 80,
 				}},
-				RequestRedirectPolicy: &Sesame_api_v1.HTTPRequestRedirectPolicy{
+				RequestRedirectPolicy: &sesame_api_v1.HTTPRequestRedirectPolicy{
 					Scheme:     pointer.StringPtr("https"),
 					Hostname:   pointer.StringPtr("envoyproxy.io"),
 					Port:       pointer.Int32Ptr(443),

@@ -40,26 +40,26 @@ Then, the new CA key will be stored in `certs/cakey.pem` and the cert in `certs/
 Then, we need to generate a keypair for Sesame. First, we make a new private key:
 
 ```
-$ openssl genrsa -out certs/Sesamekey.pem 2048
+$ openssl genrsa -out certs/sesamekey.pem 2048
 ```
 
 Then, we create a CSR and have our CA sign the CSR and issue a cert. This uses the file [_integration/cert-Sesame.ext][2], which ensures that at least one of the valid names of the certificate is the bareword `Sesame`. This is required for the handshake to succeed, as `Sesame bootstrap` configures Envoy to pass this as the SNI for the connection.
 
 ```
-$ openssl req -new -key certs/Sesamekey.pem \
-	-out certs/Sesame.csr \
+$ openssl req -new -key certs/sesamekey.pem \
+	-out certs/sesame.csr \
 	-subj "/O=Project Sesame/CN=Sesame"
 
-$ openssl x509 -req -in certs/Sesame.csr \
+$ openssl x509 -req -in certs/sesame.csr \
     -CA certs/cacert.pem \
     -CAkey certs/cakey.pem \
     -CAcreateserial \
-    -out certs/Sesamecert.pem \
+    -out certs/sesamecert.pem \
     -days 1825 -sha256 \
     -extfile _integration/cert-Sesame.ext
 ```
 
-At this point, the Sesame cert and key are in the files `certs/Sesamecert.pem` and `certs/Sesamekey.pem` respectively.
+At this point, the Sesame cert and key are in the files `certs/sesamecert.pem` and `certs/sesamekey.pem` respectively.
 
 ### Generating Envoy's keypair
 
@@ -96,7 +96,7 @@ $ kubectl create secret -n projectsesame generic cacert \
         --from-file=./certs/cacert.pem
 
 $ kubectl create secret -n projectsesame tls Sesamecert \
-        --key=./certs/Sesamekey.pem --cert=./certs/Sesamecert.pem
+        --key=./certs/sesamekey.pem --cert=./certs/sesamecert.pem
 
 $ kubectl create secret -n projectsesame tls envoycert \
         --key=./certs/envoykey.pem --cert=./certs/envoycert.pem
@@ -107,9 +107,9 @@ Note that we don't put the CA **key** into the cluster, there's no reason for th
 # Conclusion
 
 Once this process is done, the certificates will be present as Secrets in the `projectsesame` namespace, as required by
-[examples/Sesame][4].
+[examples/sesame][4].
 
-[1]: {{< param github_url >}}/tree/{{page.version}}/examples/Sesame/02-job-certgen.yaml
+[1]: {{< param github_url >}}/tree/{{page.version}}/examples/sesame/02-job-certgen.yaml
 [2]: {{< param github_url >}}/tree/{{page.version}}/_integration/cert-Sesame.ext
 [3]: {{< param github_url >}}/tree/{{page.version}}/_integration/cert-envoy.ext
-[4]: {{< param github_url >}}/tree/{{page.version}}/examples/Sesame
+[4]: {{< param github_url >}}/tree/{{page.version}}/examples/sesame

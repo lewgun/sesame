@@ -157,7 +157,7 @@ func TestValidateHeadersPolicy(t *testing.T) {
 	assert.NoError(t, HeadersPolicy{
 		Set: map[string]string{
 			"X-Envoy-Host":     "%HOSTNAME%",
-			"l5d-dst-override": "%Sesame_SERVICE_NAME%.%Sesame_NAMESPACE%.svc.cluster.local:%Sesame_SERVICE_PORT%",
+			"l5d-dst-override": "%SESAME_SERVICE_NAME%.%SESAME_NAMESPACE%.svc.cluster.local:%SESAME_SERVICE_PORT%",
 		},
 	}.Validate())
 }

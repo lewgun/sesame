@@ -17,7 +17,7 @@ import (
 	"testing"
 
 	envoy_discovery_v3 "github.com/envoyproxy/go-control-plane/envoy/service/discovery/v3"
-	Sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
+	sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
 	"github.com/projectsesame/sesame/internal/dag"
 	"github.com/projectsesame/sesame/internal/featuretests"
 	"github.com/projectsesame/sesame/internal/fixture"
@@ -44,18 +44,18 @@ func TestClusterServiceTLSBackendCAValidation(t *testing.T) {
 		Annotate("projectsesame.io/upstream-protocol.tls", "securebackend,443").
 		WithPorts(v1.ServicePort{Name: "securebackend", Port: 443, TargetPort: intstr.FromInt(8080)})
 
-	p1 := &Sesame_api_v1.HTTPProxy{
+	p1 := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "simple",
 			Namespace: svc.Namespace,
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{Fqdn: "www.example.com"},
-			Routes: []Sesame_api_v1.Route{{
-				Conditions: []Sesame_api_v1.MatchCondition{{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{Fqdn: "www.example.com"},
+			Routes: []sesame_api_v1.Route{{
+				Conditions: []sesame_api_v1.MatchCondition{{
 					Prefix: "/a",
 				}},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: svc.Name,
 					Port: 443,
 				}},
@@ -83,21 +83,21 @@ func TestClusterServiceTLSBackendCAValidation(t *testing.T) {
 		TypeUrl: clusterType,
 	})
 
-	p2 := &Sesame_api_v1.HTTPProxy{
+	p2 := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "simple",
 			Namespace: svc.Namespace,
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{Fqdn: "www.example.com"},
-			Routes: []Sesame_api_v1.Route{{
-				Conditions: []Sesame_api_v1.MatchCondition{{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{Fqdn: "www.example.com"},
+			Routes: []sesame_api_v1.Route{{
+				Conditions: []sesame_api_v1.MatchCondition{{
 					Prefix: "/a",
 				}},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: svc.Name,
 					Port: 443,
-					UpstreamValidation: &Sesame_api_v1.UpstreamValidation{
+					UpstreamValidation: &sesame_api_v1.UpstreamValidation{
 						CACertificate: secret.Name,
 						SubjectName:   "subjname",
 					},
@@ -135,19 +135,19 @@ func TestClusterServiceTLSBackendCAValidation(t *testing.T) {
 
 	rh.OnDelete(p2)
 
-	hp1 := &Sesame_api_v1.HTTPProxy{
+	hp1 := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "simple",
 			Namespace: svc.Namespace,
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{Fqdn: "www.example.com"},
-			Routes: []Sesame_api_v1.Route{{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{Fqdn: "www.example.com"},
+			Routes: []sesame_api_v1.Route{{
 				Conditions: matchconditions(prefixMatchCondition("/a")),
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: svc.Name,
 					Port: 443,
-					UpstreamValidation: &Sesame_api_v1.UpstreamValidation{
+					UpstreamValidation: &sesame_api_v1.UpstreamValidation{
 						CACertificate: secret.Name,
 						SubjectName:   "subjname",
 					},

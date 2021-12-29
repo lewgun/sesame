@@ -31,7 +31,7 @@ I1201 00:10:14.442755       1 leaderelection.go:253] successfully acquired lease
 When a `Sesame` is created, the operator should successfully reconcile the object:
 ```bash
 ...
-2020-12-01T00:10:15.341Z	INFO	controllers.Sesame	reconciling	{"request": "default/Sesame-sample"}
+2020-12-01T00:10:15.341Z	INFO	controllers.Sesame	reconciling	{"request": "default/sesame-sample"}
 ...
 2020-12-01T00:10:15.442Z	DEBUG	controller	Successfully Reconciled	{"reconcilerGroup": "operator.projectsesame.io", "reconcilerKind": "Sesame", "controller": "Sesame", "name": "Sesame-sample", "namespace": "default"}
 ```

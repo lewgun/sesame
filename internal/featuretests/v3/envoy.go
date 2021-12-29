@@ -34,7 +34,7 @@ import (
 	"github.com/envoyproxy/go-control-plane/pkg/wellknown"
 	"github.com/golang/protobuf/proto"
 	"github.com/golang/protobuf/ptypes/any"
-	Sesame_api_v1alpha1 "github.com/projectsesame/sesame/apis/projectsesame/v1alpha1"
+	sesame_api_v1alpha1 "github.com/projectsesame/sesame/apis/projectsesame/v1alpha1"
 	"github.com/projectsesame/sesame/internal/dag"
 	envoy_v3 "github.com/projectsesame/sesame/internal/envoy/v3"
 	"github.com/projectsesame/sesame/internal/protobuf"
@@ -467,8 +467,8 @@ func tcpproxyWeighted(statPrefix string, clusters ...clusterWeight) *envoy_liste
 func statsListener() *envoy_listener_v3.Listener {
 	// Single listener with metrics and health endpoints.
 	listeners := envoy_v3.StatsListeners(
-		Sesame_api_v1alpha1.MetricsConfig{Address: "0.0.0.0", Port: 8002},
-		Sesame_api_v1alpha1.HealthConfig{Address: "0.0.0.0", Port: 8002})
+		sesame_api_v1alpha1.MetricsConfig{Address: "0.0.0.0", Port: 8002},
+		sesame_api_v1alpha1.HealthConfig{Address: "0.0.0.0", Port: 8002})
 	return listeners[0]
 }
 

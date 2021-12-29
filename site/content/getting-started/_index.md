@@ -184,7 +184,7 @@ helm repo update
 ## 3. Install Sesame  
 Install Sesame by running the following:
 ```yaml 
-$ helm install my-release bitnami/Sesame
+$ helm install my-release bitnami/sesame
 ```  
 Verify Sesame is ready by running:
 ```yaml
@@ -272,7 +272,7 @@ If you encounter issues, review the [troubleshooting][17] page, [file an issue][
 [12]: {{< param slack_url >}}
 [13]: https://projectsesame.io/resources/deprecation-policy/
 [14]: https://github.com/projectsesame/sesame-operator/blob/main/README.md
-[15]: https://github.com/bitnami/charts/tree/master/bitnami/Sesame
+[15]: https://github.com/bitnami/charts/tree/master/bitnami/sesame
 [16]: https://github.com/helm/charts#%EF%B8%8F-deprecation-and-archive-notice
 [17]: /docs/{{< param latest_version >}}/troubleshooting
 [18]: /docs/{{< param latest_version >}}/architecture

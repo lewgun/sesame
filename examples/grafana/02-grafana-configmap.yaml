@@ -89,7 +89,7 @@ data:
                 "stack": false,
                 "steppedLine": false,
                 "targets": [{
-                    "expr": "avg(Sesame_httpproxy{namespace=~\"$Namespace\"}) by (namespace)",
+                    "expr": "avg(sesame_httpproxy{namespace=~\"$Namespace\"}) by (namespace)",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 1,
@@ -169,7 +169,7 @@ data:
                 "stack": false,
                 "steppedLine": false,
                 "targets": [{
-                    "expr": "avg(Sesame_httpproxy_orphaned{namespace=~\"$Namespace\"}) by (namespace)",
+                    "expr": "avg(sesame_httpproxy_orphaned{namespace=~\"$Namespace\"}) by (namespace)",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 1,
@@ -249,7 +249,7 @@ data:
                 "stack": false,
                 "steppedLine": false,
                 "targets": [{
-                    "expr": "avg(Sesame_httpproxy_valid{namespace=~\"$Namespace\",vhost=~\"$VHost\"}) by (namespace,vhost)",
+                    "expr": "avg(sesame_httpproxy_valid{namespace=~\"$Namespace\",vhost=~\"$VHost\"}) by (namespace,vhost)",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 1,
@@ -329,7 +329,7 @@ data:
                 "stack": false,
                 "steppedLine": false,
                 "targets": [{
-                    "expr": "avg(Sesame_httpproxy_invalid{namespace=~\"$Namespace\",vhost=~\"$VHost\"}) by (namespace,vhost)",
+                    "expr": "avg(sesame_httpproxy_invalid{namespace=~\"$Namespace\",vhost=~\"$VHost\"}) by (namespace,vhost)",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 1,
@@ -409,7 +409,7 @@ data:
                 "stack": false,
                 "steppedLine": false,
                 "targets": [{
-                    "expr": "avg(Sesame_httpproxy_root{namespace=~\"$Namespace\"}) by (namespace)",
+                    "expr": "avg(sesame_httpproxy_root{namespace=~\"$Namespace\"}) by (namespace)",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 1,
@@ -2976,7 +2976,7 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "avg(rate(Sesame_eventhandler_operation_total{kind=~\"$Kind\", op=~\"$Operation\"}[1m])) by (op,kind)",
+              "expr": "avg(rate(sesame_eventhandler_operation_total{kind=~\"$Kind\", op=~\"$Operation\"}[1m])) by (op,kind)",
               "legendFormat": "{{kind}} {{op}}",
               "refId": "A"
             }
@@ -3065,7 +3065,7 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "avg(rate(Sesame_eventhandler_operation_total{kind=~\"$Kind\"}[1m])) by (kind)",
+              "expr": "avg(rate(sesame_eventhandler_operation_total{kind=~\"$Kind\"}[1m])) by (kind)",
               "legendFormat": "{{kind}} operations",
               "refId": "A"
             }
@@ -3128,7 +3128,7 @@ data:
               ]
             },
             "datasource": "prometheus",
-            "definition": "label_values(Sesame_eventhandler_operation_total, op)",
+            "definition": "label_values(sesame_eventhandler_operation_total, op)",
             "hide": 0,
             "includeAll": true,
             "label": null,
@@ -3156,7 +3156,7 @@ data:
                 "value": "update"
               }
             ],
-            "query": "label_values(Sesame_eventhandler_operation_total, op)",
+            "query": "label_values(sesame_eventhandler_operation_total, op)",
             "refresh": 0,
             "regex": "",
             "skipUrlSync": false,
@@ -3177,7 +3177,7 @@ data:
               ]
             },
             "datasource": "prometheus",
-            "definition": "label_values(Sesame_eventhandler_operation_total, kind)",
+            "definition": "label_values(sesame_eventhandler_operation_total, kind)",
             "hide": 0,
             "includeAll": true,
             "label": null,
@@ -3210,7 +3210,7 @@ data:
                 "value": "Service"
               }
             ],
-            "query": "label_values(Sesame_eventhandler_operation_total, kind)",
+            "query": "label_values(sesame_eventhandler_operation_total, kind)",
             "refresh": 0,
             "regex": "",
             "skipUrlSync": false,

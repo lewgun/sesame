@@ -121,6 +121,6 @@ Following extensions are supported by Sesame:
 [3]: https://github.com/search?q=envoySimpleOperators+repo%3Aprojectsesame%2FSesame+path%3A%2Fpkg%2Fconfig+filename%3Aaccesslog.go&type=Code
 [4]: https://github.com/search?q=envoyComplexOperators+repo%3Aprojectsesame%2FSesame+path%3A%2Fpkg%2Fconfig+filename%3Aaccesslog.go&type=Code
 [5]: https://github.com/search?q=DefaultFields+repo%3Aprojectsesame%2FSesame+path%3A%2Fpkg%2Fconfig+filename%3Aaccesslog.go&type=Code
-[6]: {{< param github_url >}}/tree/{{< param latest_version >}}/examples/Sesame/01-Sesame-config.yaml
+[6]: {{< param github_url >}}/tree/{{< param latest_version >}}/examples/sesame/01-Sesame-config.yaml
 [7]: https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage
 [8]: https://www.envoyproxy.io/docs/envoy/latest/api-v3/extensions/formatter/req_without_query/v3/req_without_query.proto

@@ -787,7 +787,7 @@ func (p *Parameters) Validate() error {
 
 // Defaults returns the default set of parameters.
 func Defaults() Parameters {
-	SesameNamespace := GetenvOr("Sesame_NAMESPACE", "projectsesame")
+	SesameNamespace := GetenvOr("SESAME_NAMESPACE", "projectsesame")
 
 	return Parameters{
 		Debug:      false,

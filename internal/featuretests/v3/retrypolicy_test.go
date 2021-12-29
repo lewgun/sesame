@@ -19,7 +19,7 @@ import (
 
 	envoy_route_v3 "github.com/envoyproxy/go-control-plane/envoy/config/route/v3"
 	envoy_discovery_v3 "github.com/envoyproxy/go-control-plane/envoy/service/discovery/v3"
-	Sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
+	sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
 	envoy_v3 "github.com/projectsesame/sesame/internal/envoy/v3"
 	"github.com/projectsesame/sesame/internal/featuretests"
 	"github.com/projectsesame/sesame/internal/fixture"
@@ -185,19 +185,19 @@ func TestRetryPolicy(t *testing.T) {
 
 	rh.OnDelete(i5)
 
-	hp1 := &Sesame_api_v1.HTTPProxy{
+	hp1 := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "simple",
 			Namespace: s1.Namespace,
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{Fqdn: "test3.test.com"},
-			Routes: []Sesame_api_v1.Route{{
-				RetryPolicy: &Sesame_api_v1.RetryPolicy{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{Fqdn: "test3.test.com"},
+			Routes: []sesame_api_v1.Route{{
+				RetryPolicy: &sesame_api_v1.RetryPolicy{
 					NumRetries:    5,
 					PerTryTimeout: "105s",
 				},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: s1.Name,
 					Port: 80,
 				}},
@@ -220,19 +220,19 @@ func TestRetryPolicy(t *testing.T) {
 		TypeUrl: routeType,
 	})
 
-	hp2 := &Sesame_api_v1.HTTPProxy{
+	hp2 := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "simple",
 			Namespace: s1.Namespace,
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{Fqdn: "test3.test.com"},
-			Routes: []Sesame_api_v1.Route{{
-				RetryPolicy: &Sesame_api_v1.RetryPolicy{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{Fqdn: "test3.test.com"},
+			Routes: []sesame_api_v1.Route{{
+				RetryPolicy: &sesame_api_v1.RetryPolicy{
 					NumRetries:    -1,
 					PerTryTimeout: "105s",
 				},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: s1.Name,
 					Port: 80,
 				}},
@@ -255,19 +255,19 @@ func TestRetryPolicy(t *testing.T) {
 		TypeUrl: routeType,
 	})
 
-	hp3 := &Sesame_api_v1.HTTPProxy{
+	hp3 := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "simple",
 			Namespace: s1.Namespace,
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{Fqdn: "test3.test.com"},
-			Routes: []Sesame_api_v1.Route{{
-				RetryPolicy: &Sesame_api_v1.RetryPolicy{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{Fqdn: "test3.test.com"},
+			Routes: []sesame_api_v1.Route{{
+				RetryPolicy: &sesame_api_v1.RetryPolicy{
 					NumRetries:    0,
 					PerTryTimeout: "105s",
 				},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: s1.Name,
 					Port: 80,
 				}},

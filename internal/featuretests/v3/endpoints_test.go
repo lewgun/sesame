@@ -18,7 +18,7 @@ import (
 
 	envoy_endpoint_v3 "github.com/envoyproxy/go-control-plane/envoy/config/endpoint/v3"
 	envoy_discovery_v3 "github.com/envoyproxy/go-control-plane/envoy/service/discovery/v3"
-	Sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
+	sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
 	envoy_v3 "github.com/projectsesame/sesame/internal/envoy/v3"
 	"github.com/projectsesame/sesame/internal/featuretests"
 	"github.com/projectsesame/sesame/internal/fixture"
@@ -38,9 +38,9 @@ func TestAddRemoveEndpoints(t *testing.T) {
 
 	rh.OnAdd(fixture.NewProxy("super-long-namespace-name-oh-boy/proxy").
 		WithFQDN("proxy.example.com").
-		WithSpec(Sesame_api_v1.HTTPProxySpec{
-			Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+		WithSpec(sesame_api_v1.HTTPProxySpec{
+			Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: "what-a-descriptive-service-name-you-must-be-so-proud",
 					Port: 8000,
 				}, {
@@ -115,20 +115,20 @@ func TestAddEndpointComplicated(t *testing.T) {
 
 	rh.OnAdd(fixture.NewProxy("kuard").
 		WithFQDN("kuard.example.com").
-		WithSpec(Sesame_api_v1.HTTPProxySpec{
-			Routes: []Sesame_api_v1.Route{{
-				Conditions: []Sesame_api_v1.MatchCondition{{
+		WithSpec(sesame_api_v1.HTTPProxySpec{
+			Routes: []sesame_api_v1.Route{{
+				Conditions: []sesame_api_v1.MatchCondition{{
 					Prefix: "/foo",
 				}},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: "kuard",
 					Port: 8080,
 				}},
 			}, {
-				Conditions: []Sesame_api_v1.MatchCondition{{
+				Conditions: []sesame_api_v1.MatchCondition{{
 					Prefix: "/admin",
 				}},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: "kuard",
 					Port: 9000,
 				}},
@@ -194,9 +194,9 @@ func TestEndpointFilter(t *testing.T) {
 
 	rh.OnAdd(fixture.NewProxy("default/kuard").
 		WithFQDN("kuard.example.com").
-		WithSpec(Sesame_api_v1.HTTPProxySpec{
-			Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+		WithSpec(sesame_api_v1.HTTPProxySpec{
+			Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: "kuard",
 					Port: 8080,
 				}},
@@ -261,9 +261,9 @@ func TestIssue602(t *testing.T) {
 
 	rh.OnAdd(fixture.NewProxy("simple").
 		WithFQDN("simple.example.com").
-		WithSpec(Sesame_api_v1.HTTPProxySpec{
-			Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+		WithSpec(sesame_api_v1.HTTPProxySpec{
+			Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: "simple",
 					Port: 8080,
 				}},

@@ -21,7 +21,7 @@ Sesame supports Envoy v1.16.2 which resolves various CVEs found in Envoy, please
 
 ## Envoy XDS Resource Version Support
 
-As mentioned in [Sesame 1.10](https://projectsesame.io/Sesame_v1100/#envoy-xds-v3-support) the `v2` XDS resource version has been removed from Sesame ahead of its removal from Envoy. Please see the [XDS Migration Guide](https://projectsesame.io/guides/xds-migration/) for upgrading your instances of Envoy/Sesame.
+As mentioned in [Sesame 1.10](https://projectsesame.io/sesame_v1100/#envoy-xds-v3-support) the `v2` XDS resource version has been removed from Sesame ahead of its removal from Envoy. Please see the [XDS Migration Guide](https://projectsesame.io/guides/xds-migration/) for upgrading your instances of Envoy/sesame.
 
 __Note:__ This change applies also to any External Auth servers that may be integrated.
 

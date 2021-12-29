@@ -43,7 +43,7 @@ On Minikube, to get the IP address of the Sesame service run:
 $ minikube service -n projectsesame sesame --url
 ```
 
-The response is always an IP address, for example `http://192.168.99.100:30588`. This is used as Sesame_IP in the rest of the documentation.
+The response is always an IP address, for example `http://192.168.99.100:30588`. This is used as SESAME_IP in the rest of the documentation.
 
 #### kind
 
@@ -68,7 +68,7 @@ This file is in the `examples/kind` directory:
 $ kind create cluster --config examples/kind/kind-expose-port.yaml
 ```
 
-Then, your Sesame_IP (as used below) will just be `localhost:8080`.
+Then, your SESAME_IP (as used below) will just be `localhost:8080`.
 
 _Note: If you change Envoy's ports to bind to 80/443 then it's possible to add entries to your local `/etc/hosts` file and make requests like `http://kuard.local` which matches how it might work on a production installation._
 
@@ -140,7 +140,7 @@ ingressroute.sesame.heptio.com/kuard   1h
 In your terminal, use curl with the IP or DNS address of the Sesame Service to send a request to the demo application:
 
 ```sh
-$ curl -H 'Host: kuard.local' ${Sesame_IP}
+$ curl -H 'Host: kuard.local' ${SESAME_IP}
 ```
 ### Test with HTTPProxy
 
@@ -176,7 +176,7 @@ httpproxy.projectsesame.io/kuard      kuard.local         <SECRET NAME IF TLS US
 In your terminal, use curl with the IP or DNS address of the Sesame Service to send a request to the demo application:
 
 ```sh
-$ curl -H 'Host: kuard.local' ${Sesame_IP}
+$ curl -H 'Host: kuard.local' ${SESAME_IP}
 ```
 
 ## Running without a Kubernetes LoadBalancer
@@ -219,12 +219,12 @@ $ kubectl delete ns projectsesame
 ```
 
 [1]: #running-without-a-kubernetes-loadbalancer
-[2]: {{< param github_url >}}/tree/{{page.version}}/examples/Sesame/README.md
+[2]: {{< param github_url >}}/tree/{{page.version}}/examples/sesame/README.md
 [3]: #host-networking
 [4]: {% link _guides/proxy-proto.md %}
 [5]: https://github.com/kubernetes-up-and-running/kuard
 [6]: {% link docs/v1.0.1/ingressroute.md %}
-[7]: {{< param github_url >}}/tree/{{page.version}}/examples/Sesame/02-service-envoy.yaml
+[7]: {{< param github_url >}}/tree/{{page.version}}/examples/sesame/02-service-envoy.yaml
 [8]: {% link getting-started.md %}
 [9]: {% link docs/v1.0.0/httpproxy.md %}
 [10]: {% link _guides/deploy-aws-nlb.md %}

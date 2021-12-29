@@ -30,4 +30,4 @@ data:
 
 _Note:_ The default example `Sesame` includes this [file][1] for easy deployment of Sesame.
 
-[1]: {{< param github_url >}}/tree/{{page.version}}/examples/Sesame/01-Sesame-config.yaml
+[1]: {{< param github_url >}}/tree/{{page.version}}/examples/sesame/01-Sesame-config.yaml

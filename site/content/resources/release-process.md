@@ -30,12 +30,12 @@ A minor release requires:
 Set environment variables for use in subsequent steps:
 
 ```bash
-export Sesame_RELEASE_VERSION=v1.11.0
-export Sesame_RELEASE_VERSION_MAJOR=1
-export Sesame_RELEASE_VERSION_MINOR=11
+export SESAME_RELEASE_VERSION=v1.11.0
+export SESAME_RELEASE_VERSION_MAJOR=1
+export SESAME_RELEASE_VERSION_MINOR=11
 
-export Sesame_UPSTREAM_REMOTE_NAME=upstream
-export Sesame_OPERATOR_UPSTREAM_REMOTE_NAME=upstream
+export SESAME_UPSTREAM_REMOTE_NAME=upstream
+export SESAME_OPERATOR_UPSTREAM_REMOTE_NAME=upstream
 ```
 
 ### Update the website with release-specific information
@@ -45,7 +45,7 @@ export Sesame_OPERATOR_UPSTREAM_REMOTE_NAME=upstream
 1. Generate a new set of versioned docs:
     
 ```bash
-go run ./hack/release/prepare-release.go $Sesame_RELEASE_VERSION
+go run ./hack/release/prepare-release.go $SESAME_RELEASE_VERSION
 ```
 
 1. Add the new release to the compatibility matrix (`site/content/resources/compatibility-matrix.md`).
@@ -59,31 +59,31 @@ go run ./hack/release/prepare-release.go $Sesame_RELEASE_VERSION
 1. Create a local release branch:
 
 ```bash
-git checkout -b release-${Sesame_RELEASE_VERSION_MAJOR}.${Sesame_RELEASE_VERSION_MINOR}
+git checkout -b release-${SESAME_RELEASE_VERSION_MAJOR}.${SESAME_RELEASE_VERSION_MINOR}
 ```
 
 1. Push the branch to `github.com/projectsesame/sesame`:
 
 ```bash
-git push --set-upstream ${Sesame_UPSTREAM_REMOTE_NAME} release-${Sesame_RELEASE_VERSION_MAJOR}.${Sesame_RELEASE_VERSION_MINOR}
+git push --set-upstream ${SESAME_UPSTREAM_REMOTE_NAME} release-${SESAME_RELEASE_VERSION_MAJOR}.${SESAME_RELEASE_VERSION_MINOR}
 ```
 
 1. Update the deployment YAML and create a local tag:
 
 ```bash
-./hack/release/make-release-tag.sh main $Sesame_RELEASE_VERSION
+./hack/release/make-release-tag.sh main $SESAME_RELEASE_VERSION
 ```
 
 1. Push the branch to `github.com/projectsesame/sesame`:
 
 ```bash
-git push ${Sesame_UPSTREAM_REMOTE_NAME} release-${Sesame_RELEASE_VERSION_MAJOR}.${Sesame_RELEASE_VERSION_MINOR}
+git push ${SESAME_UPSTREAM_REMOTE_NAME} release-${SESAME_RELEASE_VERSION_MAJOR}.${SESAME_RELEASE_VERSION_MINOR}
 ```
 
 1. Push the tag to `github.com/projectsesame/sesame`:
 
 ```bash
-git push ${Sesame_UPSTREAM_REMOTE_NAME} ${Sesame_RELEASE_VERSION}
+git push ${SESAME_UPSTREAM_REMOTE_NAME} ${SESAME_RELEASE_VERSION}
 ```
 
 ### Release the operator
@@ -92,31 +92,31 @@ git push ${Sesame_UPSTREAM_REMOTE_NAME} ${Sesame_RELEASE_VERSION}
 1. Create a local release branch:
 
 ```bash
-git checkout -b release-${Sesame_RELEASE_VERSION_MAJOR}.${Sesame_RELEASE_VERSION_MINOR}
+git checkout -b release-${SESAME_RELEASE_VERSION_MAJOR}.${SESAME_RELEASE_VERSION_MINOR}
 ```
 
 1. Push the branch to `github.com/projectsesame/sesame-operator`:
 
 ```bash
-git push --set-upstream ${Sesame_OPERATOR_UPSTREAM_REMOTE_NAME} release-${Sesame_RELEASE_VERSION_MAJOR}.${Sesame_RELEASE_VERSION_MINOR}
+git push --set-upstream ${SESAME_OPERATOR_UPSTREAM_REMOTE_NAME} release-${SESAME_RELEASE_VERSION_MAJOR}.${SESAME_RELEASE_VERSION_MINOR}
 ```
 
 1. Update the deployment YAML and create a local tag:
 
 ```bash
-./hack/release/make-release-tag.sh main $Sesame_RELEASE_VERSION
+./hack/release/make-release-tag.sh main $SESAME_RELEASE_VERSION
 ```
 
 1. Push the branch to `github.com/projectsesame/sesame-operator`:
 
 ```bash
-git push ${Sesame_OPERATOR_UPSTREAM_REMOTE_NAME} release-${Sesame_RELEASE_VERSION_MAJOR}.${Sesame_RELEASE_VERSION_MINOR}
+git push ${SESAME_OPERATOR_UPSTREAM_REMOTE_NAME} release-${SESAME_RELEASE_VERSION_MAJOR}.${SESAME_RELEASE_VERSION_MINOR}
 ```
 
 1. Push the tag to `github.com/projectsesame/sesame-operator`:
 
 ```bash
-git push ${Sesame_OPERATOR_UPSTREAM_REMOTE_NAME} ${Sesame_RELEASE_VERSION}
+git push ${SESAME_OPERATOR_UPSTREAM_REMOTE_NAME} ${SESAME_RELEASE_VERSION}
 ```
 
 ### Update quickstart YAML redirects
@@ -172,19 +172,19 @@ A patch release requires:
 Set environment variables for use in subsequent steps:
 
 ```bash
-export Sesame_RELEASE_VERSION=v1.11.1
-export Sesame_RELEASE_VERSION_MAJOR=1
-export Sesame_RELEASE_VERSION_MINOR=11
-export Sesame_PREVIOUS_VERSION=v1.11.0
+export SESAME_RELEASE_VERSION=v1.11.1
+export SESAME_RELEASE_VERSION_MAJOR=1
+export SESAME_RELEASE_VERSION_MINOR=11
+export SESAME_PREVIOUS_VERSION=v1.11.0
 
-export Sesame_UPSTREAM_REMOTE_NAME=upstream
-export Sesame_OPERATOR_UPSTREAM_REMOTE_NAME=upstream
+export SESAME_UPSTREAM_REMOTE_NAME=upstream
+export SESAME_OPERATOR_UPSTREAM_REMOTE_NAME=upstream
 ```
 
 ### Cherry-pick relevant commits into release branch
 
 1. Get a list of commit SHAs from `main` to backport.
-1. Check out the release branch for the minor version you're patching (i.e. `release-${Sesame_RELEASE_VERSION_MAJOR}.${Sesame_RELEASE_VERSION_MINOR}`), ensure it's up to date, and ensure you have a clean working directory.
+1. Check out the release branch for the minor version you're patching (i.e. `release-${SESAME_RELEASE_VERSION_MAJOR}.${SESAME_RELEASE_VERSION_MINOR}`), ensure it's up to date, and ensure you have a clean working directory.
 1. Create a new local feature branch from the release branch.
 1. Cherry-pick each commit from Step 1, fixing any conflicts as needed:
 
@@ -202,7 +202,7 @@ git cherry-pick <SHA>
 1. Generate a new set of versioned docs:
     
 ```bash
-go run ./hack/release/prepare-release.go $Sesame_PREVIOUS_VERSION $Sesame_RELEASE_VERSION
+go run ./hack/release/prepare-release.go $SESAME_PREVIOUS_VERSION $SESAME_RELEASE_VERSION
 ```
 
 1. Add the new release to the compatibility matrix (`/site/_resources/compatibility-matrix.md`).
@@ -217,25 +217,25 @@ go run ./hack/release/prepare-release.go $Sesame_PREVIOUS_VERSION $Sesame_RELEAS
 1. Update the deployment YAML and create a local tag:
 
 ```bash
-./hack/release/make-release-tag.sh $Sesame_PREVIOUS_VERSION $Sesame_RELEASE_VERSION
+./hack/release/make-release-tag.sh $SESAME_PREVIOUS_VERSION $SESAME_RELEASE_VERSION
 ```
 
 1. Push the branch to `github.com/projectsesame/sesame`:
 
 ```bash
-git push ${Sesame_UPSTREAM_REMOTE_NAME} release-${Sesame_RELEASE_VERSION_MAJOR}.${Sesame_RELEASE_VERSION_MINOR}
+git push ${SESAME_UPSTREAM_REMOTE_NAME} release-${SESAME_RELEASE_VERSION_MAJOR}.${SESAME_RELEASE_VERSION_MINOR}
 ```
 
 1. Push the tag to `github.com/projectsesame/sesame`:
 
 ```bash
-git push ${Sesame_UPSTREAM_REMOTE_NAME} ${Sesame_RELEASE_VERSION}
+git push ${SESAME_UPSTREAM_REMOTE_NAME} ${SESAME_RELEASE_VERSION}
 ```
 
 ### Release the operator
 
 1. Get a list of commit SHAs from `main` to backport.
-1. Check out the release branch for the minor version you're patching (i.e. `release-${Sesame_RELEASE_VERSION_MAJOR}.${Sesame_RELEASE_VERSION_MINOR}`), ensure it's up to date, and ensure you have a clean working directory.
+1. Check out the release branch for the minor version you're patching (i.e. `release-${SESAME_RELEASE_VERSION_MAJOR}.${SESAME_RELEASE_VERSION_MINOR}`), ensure it's up to date, and ensure you have a clean working directory.
 1. Create a new local feature branch from the release branch.
 1. Cherry-pick each commit from Step 1, fixing any conflicts as needed:
 
@@ -251,19 +251,19 @@ git cherry-pick <SHA>
 1. Update the deployment YAML and create a local tag:
 
 ```bash
-./hack/release/make-release-tag.sh $Sesame_PREVIOUS_VERSION $Sesame_RELEASE_VERSION
+./hack/release/make-release-tag.sh $SESAME_PREVIOUS_VERSION $SESAME_RELEASE_VERSION
 ```
 
 1. Push the branch to `github.com/projectsesame/sesame-operator`:
 
 ```bash
-git push ${Sesame_OPERATOR_UPSTREAM_REMOTE_NAME} release-${Sesame_RELEASE_VERSION_MAJOR}.${Sesame_RELEASE_VERSION_MINOR}
+git push ${SESAME_OPERATOR_UPSTREAM_REMOTE_NAME} release-${SESAME_RELEASE_VERSION_MAJOR}.${SESAME_RELEASE_VERSION_MINOR}
 ```
 
 1. Push the tag to `github.com/projectsesame/sesame-operator`:
 
 ```bash
-git push ${Sesame_OPERATOR_UPSTREAM_REMOTE_NAME} ${Sesame_RELEASE_VERSION}
+git push ${SESAME_OPERATOR_UPSTREAM_REMOTE_NAME} ${SESAME_RELEASE_VERSION}
 ```
 
 ### Do the Github release and write release notes

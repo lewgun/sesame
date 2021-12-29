@@ -36,4 +36,4 @@ A request to `projectsesame.io/blog` gets routed via a load balancer to an insta
 
 [1]: https://www.envoyproxy.io/docs/envoy/v1.13.0/api-docs/xds_protocol
 [2]: ../img/archoverview.png
-[3]: ../img/Sesame_deployment_in_k8s.png
+[3]: ../img/sesame_deployment_in_k8s.png

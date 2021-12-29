@@ -362,19 +362,19 @@ _TBD_
 
 Metrics are essential to any system. Sesame will expose a `/metrics` Prometheus endpoint with the following metrics:
 
-- **Sesame_ingressroute_total (gauge):** Total number of IngressRoutes objects that exist regardless of status (i.e. Valid / Invalid / Orphaned, etc). This metric should match the sum of `Orphaned` + `Valid` + `Invalid` IngressRoutes.
+- **sesame_ingressroute_total (gauge):** Total number of IngressRoutes objects that exist regardless of status (i.e. Valid / Invalid / Orphaned, etc). This metric should match the sum of `Orphaned` + `Valid` + `Invalid` IngressRoutes.
   - namespace
-- **Sesame_ingressroute_orphaned_total (gauge):**  Number of `Orphaned` IngressRoute objects which have no root delegating to them
+- **sesame_ingressroute_orphaned_total (gauge):**  Number of `Orphaned` IngressRoute objects which have no root delegating to them
   - namespace
-- **Sesame_ingressroute_root_total (gauge):**  Number of `Root` IngressRoute objects (Note: There will only be a single `Root` IngressRoute per vhost)
+- **sesame_ingressroute_root_total (gauge):**  Number of `Root` IngressRoute objects (Note: There will only be a single `Root` IngressRoute per vhost)
   - namespace
-- **Sesame_ingressroute_valid_total (gauge):**  Number of `Valid` IngressRoute objects
-  - namespace
-  - vhost
-- **Sesame_ingressroute_invalid_total (gauge):**  Number of `Invalid` IngressRoute objects
+- **sesame_ingressroute_valid_total (gauge):**  Number of `Valid` IngressRoute objects
   - namespace
   - vhost
-- **Sesame_ingressroute_dagrebuild_timestamp (gauge):** Timestamp of the last DAG rebuild
+- **sesame_ingressroute_invalid_total (gauge):**  Number of `Invalid` IngressRoute objects
+  - namespace
+  - vhost
+- **sesame_ingressroute_dagrebuild_timestamp (gauge):** Timestamp of the last DAG rebuild
 
 ## Envoy Metrics
 

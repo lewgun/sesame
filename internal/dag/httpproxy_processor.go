@@ -460,7 +460,7 @@ func (p *HTTPProxyProcessor) computeRoutes(
 	}
 
 	dynamicHeaders := map[string]string{
-		"Sesame_NAMESPACE": proxy.Namespace,
+		"SESAME_NAMESPACE": proxy.Namespace,
 	}
 
 	for _, route := range proxy.Spec.Routes {
@@ -641,8 +641,8 @@ func (p *HTTPProxyProcessor) computeRoutes(
 				}
 			}
 
-			dynamicHeaders["Sesame_SERVICE_NAME"] = service.Name
-			dynamicHeaders["Sesame_SERVICE_PORT"] = strconv.Itoa(service.Port)
+			dynamicHeaders["SESAME_SERVICE_NAME"] = service.Name
+			dynamicHeaders["SESAME_SERVICE_PORT"] = strconv.Itoa(service.Port)
 
 			reqHP, err := headersPolicyService(p.RequestHeadersPolicy, service.RequestHeadersPolicy, dynamicHeaders)
 			if err != nil {

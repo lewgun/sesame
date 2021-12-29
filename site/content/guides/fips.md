@@ -35,7 +35,7 @@ However, that is out of the scope of this guide and interested users will have t
 
 ## Building Sesame
 
-In this section we will describe how the [`projectsesame/Sesame`][5] container image can be compiled and linked to BoringCrypto for FIPS compliance.
+In this section we will describe how the [`projectsesame/sesame`][5] container image can be compiled and linked to BoringCrypto for FIPS compliance.
 We will be modifying the standard build process by setting up some dependencies and passing additional arguments to the same `make` target used to build the standard, non-FIPS image distributed by the project.
 
 You will need some software downloaded and installed on the computer you are performing the Sesame FIPS build on:
@@ -44,7 +44,7 @@ You will need some software downloaded and installed on the computer you are per
 - [Docker][7]
 
 The Sesame [Dockerfile][8] uses a multistage build that performs compilation in an image that contains the necessary build tools and dependencies and then exports compiled artifacts to a final image.
-In order to minimize the `projectsesame/Sesame` image footprint, the final output image only consists of a single layer, containing a lone file: the statically compiled `Sesame` binary.
+In order to minimize the `projectsesame/sesame` image footprint, the final output image only consists of a single layer, containing a lone file: the statically compiled `Sesame` binary.
 The standard Sesame build uses the upstream `golang` image as a build base, however we will have to swap that out to build Sesame with BoringCrypto.
 
 We can use the Google-provided Go implementation that has patches on top of standard Go to enable integrating BoringCrypto.
@@ -70,7 +70,7 @@ The container image build process should fail before export of the `Sesame` bina
 To be fully sure the produced `Sesame` binary has been compiled with BoringCrypto you must remove the `-s` flag from the base Sesame `Makefile` to stop stripping symbols and run through the build process above.
 Then you will be able to inspect the `Sesame` binary with `go tool nm` to check for symbols containing the string `_Cfunc__goboringcrypto_`.
 
-Once you have a `projectsesame/Sesame` image built, you can re-tag it if needed, push the image to a registry, and reference it in a Sesame deployment to use it!
+Once you have a `projectsesame/sesame` image built, you can re-tag it if needed, push the image to a registry, and reference it in a Sesame deployment to use it!
 
 ## Building Envoy
 
@@ -128,7 +128,7 @@ The critical communication paths and how they are set up to be FIPS compliant ar
 [2]: https://boringssl.googlesource.com/boringssl/
 [3]: https://boringssl.googlesource.com/boringssl/+/master/crypto/fipsmodule/FIPS.md
 [4]: https://go.googlesource.com/go/+/dev.boringcrypto/README.boringcrypto.md
-[5]: https://hub.docker.com/r/projectsesame/Sesame
+[5]: https://hub.docker.com/r/projectsesame/sesame
 [6]: https://www.gnu.org/software/make/
 [7]: https://www.docker.com/
 [8]: {{< param github_url >}}/blob/main/Dockerfile

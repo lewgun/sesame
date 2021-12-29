@@ -23,4 +23,4 @@ If you encounter issues review the [troubleshooting][5] page, [file an issue][6]
 [4]: /resources/compatibility-matrix.md
 [5]: /docs/main/troubleshooting
 [6]: https://github.com/projectsesame/sesame/issues
-[7]: https://kubernetes.slack.com/messages/Sesame
+[7]: https://kubernetes.slack.com/messages/sesame

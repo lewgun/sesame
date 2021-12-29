@@ -204,7 +204,7 @@ Signed-off-by: Your Name <you@youremail.com>
 #### Sample commit message
 
 ```
-internal/Sesame: Add quux functions
+internal/sesame: Add quux functions
 
 To implement the quux functions from #xxyyz, we need to
 florble the greep dots, then ensure that the florble is

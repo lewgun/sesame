@@ -18,7 +18,7 @@ import (
 
 	envoy_route_v3 "github.com/envoyproxy/go-control-plane/envoy/config/route/v3"
 	envoy_discovery_v3 "github.com/envoyproxy/go-control-plane/envoy/service/discovery/v3"
-	Sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
+	sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
 	envoy_v3 "github.com/projectsesame/sesame/internal/envoy/v3"
 	"github.com/projectsesame/sesame/internal/fixture"
 	v1 "k8s.io/api/core/v1"
@@ -27,7 +27,7 @@ import (
 )
 
 // Update helper to modify a proxy and call rh.OnUpdate. Returns the modified object.
-func update(rh cache.ResourceEventHandler, old *Sesame_api_v1.HTTPProxy, modify func(*Sesame_api_v1.HTTPProxy)) *Sesame_api_v1.HTTPProxy {
+func update(rh cache.ResourceEventHandler, old *sesame_api_v1.HTTPProxy, modify func(*sesame_api_v1.HTTPProxy)) *sesame_api_v1.HTTPProxy {
 	updated := old.DeepCopy()
 
 	modify(updated)
@@ -44,18 +44,18 @@ func basic(t *testing.T) {
 		WithPorts(v1.ServicePort{Port: 8080, TargetPort: intstr.FromInt(8080)}))
 
 	vhost := fixture.NewProxy("kuard").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "kuard.projectsesame.io",
 			},
-			Routes: []Sesame_api_v1.Route{{
+			Routes: []sesame_api_v1.Route{{
 				Conditions: matchconditions(prefixMatchCondition("/api")),
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: "kuard",
 					Port: 8080,
 				}},
-				PathRewritePolicy: &Sesame_api_v1.PathRewritePolicy{
-					ReplacePrefix: []Sesame_api_v1.ReplacePrefix{
+				PathRewritePolicy: &sesame_api_v1.PathRewritePolicy{
+					ReplacePrefix: []sesame_api_v1.ReplacePrefix{
 						{
 							Replacement: "/api/v1",
 						},
@@ -86,9 +86,9 @@ func basic(t *testing.T) {
 
 	// Update the vhost to make the replacement ambiguous. This should remove the generated config.
 	vhost = update(rh, vhost,
-		func(vhost *Sesame_api_v1.HTTPProxy) {
+		func(vhost *sesame_api_v1.HTTPProxy) {
 			vhost.Spec.Routes[0].PathRewritePolicy.ReplacePrefix =
-				[]Sesame_api_v1.ReplacePrefix{
+				[]sesame_api_v1.ReplacePrefix{
 					{Replacement: "/api/v1"},
 					{Replacement: "/api/v2"},
 				}
@@ -99,13 +99,13 @@ func basic(t *testing.T) {
 			envoy_v3.RouteConfiguration("ingress_http"),
 		),
 		TypeUrl: routeType,
-	}).Status(vhost).HasError(Sesame_api_v1.ConditionTypePrefixReplaceError, "AmbiguousReplacement", "ambiguous prefix replacement")
+	}).Status(vhost).HasError(sesame_api_v1.ConditionTypePrefixReplaceError, "AmbiguousReplacement", "ambiguous prefix replacement")
 
 	// The replacement isn't ambiguous any more because only one of the prefixes matches.
 	vhost = update(rh, vhost,
-		func(vhost *Sesame_api_v1.HTTPProxy) {
+		func(vhost *sesame_api_v1.HTTPProxy) {
 			vhost.Spec.Routes[0].PathRewritePolicy.ReplacePrefix =
-				[]Sesame_api_v1.ReplacePrefix{
+				[]sesame_api_v1.ReplacePrefix{
 					{Prefix: "/foo", Replacement: "/api/v1"},
 					{Prefix: "/api", Replacement: "/api/v2"},
 				}
@@ -132,9 +132,9 @@ func basic(t *testing.T) {
 	// But having duplicate prefixes in the replacements makes
 	// it ambiguous again.
 	vhost = update(rh, vhost,
-		func(vhost *Sesame_api_v1.HTTPProxy) {
+		func(vhost *sesame_api_v1.HTTPProxy) {
 			vhost.Spec.Routes[0].PathRewritePolicy.ReplacePrefix =
-				[]Sesame_api_v1.ReplacePrefix{
+				[]sesame_api_v1.ReplacePrefix{
 					{Prefix: "/foo", Replacement: "/api/v1"},
 					{Prefix: "/foo", Replacement: "/api/v2"},
 				}
@@ -145,13 +145,13 @@ func basic(t *testing.T) {
 			envoy_v3.RouteConfiguration("ingress_http"),
 		),
 		TypeUrl: routeType,
-	}).Status(vhost).HasError(Sesame_api_v1.ConditionTypePrefixReplaceError, "DuplicateReplacement", "duplicate replacement prefix '/foo'")
+	}).Status(vhost).HasError(sesame_api_v1.ConditionTypePrefixReplaceError, "DuplicateReplacement", "duplicate replacement prefix '/foo'")
 
 	// The "/api" prefix should have precedence over the empty prefix.
 	vhost = update(rh, vhost,
-		func(vhost *Sesame_api_v1.HTTPProxy) {
+		func(vhost *sesame_api_v1.HTTPProxy) {
 			vhost.Spec.Routes[0].PathRewritePolicy.ReplacePrefix =
-				[]Sesame_api_v1.ReplacePrefix{
+				[]sesame_api_v1.ReplacePrefix{
 					{Prefix: "/api", Replacement: "/api/full"},
 					{Prefix: "", Replacement: "/api/empty"},
 				}
@@ -179,7 +179,7 @@ func basic(t *testing.T) {
 	// will be used. So we expect that the default replacement prefix
 	// will be used.
 	update(rh, vhost,
-		func(vhost *Sesame_api_v1.HTTPProxy) {
+		func(vhost *sesame_api_v1.HTTPProxy) {
 			vhost.Spec.Routes[0].Conditions = nil
 		})
 
@@ -206,11 +206,11 @@ func multiInclude(t *testing.T) {
 		WithPorts(v1.ServicePort{Port: 8080, TargetPort: intstr.FromInt(8080)}))
 
 	vhost1 := fixture.NewProxy("host1").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "host1.projectsesame.io",
 			},
-			Includes: []Sesame_api_v1.Include{{
+			Includes: []sesame_api_v1.Include{{
 				Name:       "app",
 				Namespace:  "default",
 				Conditions: matchconditions(prefixMatchCondition("/v1")),
@@ -218,11 +218,11 @@ func multiInclude(t *testing.T) {
 		})
 
 	vhost2 := fixture.NewProxy("host2").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "host2.projectsesame.io",
 			},
-			Includes: []Sesame_api_v1.Include{{
+			Includes: []sesame_api_v1.Include{{
 				Name:       "app",
 				Namespace:  "default",
 				Conditions: matchconditions(prefixMatchCondition("/v2")),
@@ -230,14 +230,14 @@ func multiInclude(t *testing.T) {
 		})
 
 	app := fixture.NewProxy("app").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+		sesame_api_v1.HTTPProxySpec{
+			Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: "kuard",
 					Port: 8080,
 				}},
-				PathRewritePolicy: &Sesame_api_v1.PathRewritePolicy{
-					ReplacePrefix: []Sesame_api_v1.ReplacePrefix{
+				PathRewritePolicy: &sesame_api_v1.PathRewritePolicy{
+					ReplacePrefix: []sesame_api_v1.ReplacePrefix{
 						{Prefix: "/v2", Replacement: "/api/v2"},
 						{Prefix: "/v1", Replacement: "/api/v1"},
 					},
@@ -279,9 +279,9 @@ func multiInclude(t *testing.T) {
 
 	// Remove one of the replacements, and one cluster loses the rewrite.
 	update(rh, app,
-		func(app *Sesame_api_v1.HTTPProxy) {
+		func(app *sesame_api_v1.HTTPProxy) {
 			app.Spec.Routes[0].PathRewritePolicy.ReplacePrefix =
-				[]Sesame_api_v1.ReplacePrefix{
+				[]sesame_api_v1.ReplacePrefix{
 					{Prefix: "/v1", Replacement: "/api/v1"},
 				}
 		})
@@ -319,18 +319,18 @@ func replaceWithSlash(t *testing.T) {
 		WithPorts(v1.ServicePort{Port: 8080, TargetPort: intstr.FromInt(8080)}))
 
 	vhost1 := fixture.NewProxy("host1").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "host1.projectsesame.io",
 			},
-			Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+			Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: "kuard",
 					Port: 8080,
 				}},
 				Conditions: matchconditions(prefixMatchCondition("/foo")),
-				PathRewritePolicy: &Sesame_api_v1.PathRewritePolicy{
-					ReplacePrefix: []Sesame_api_v1.ReplacePrefix{
+				PathRewritePolicy: &sesame_api_v1.PathRewritePolicy{
+					ReplacePrefix: []sesame_api_v1.ReplacePrefix{
 						{Replacement: "/"},
 					},
 				},
@@ -338,18 +338,18 @@ func replaceWithSlash(t *testing.T) {
 		})
 
 	vhost2 := fixture.NewProxy("host2").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "host2.projectsesame.io",
 			},
-			Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+			Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: "kuard",
 					Port: 8080,
 				}},
 				Conditions: matchconditions(prefixMatchCondition("/bar/")),
-				PathRewritePolicy: &Sesame_api_v1.PathRewritePolicy{
-					ReplacePrefix: []Sesame_api_v1.ReplacePrefix{
+				PathRewritePolicy: &sesame_api_v1.PathRewritePolicy{
+					ReplacePrefix: []sesame_api_v1.ReplacePrefix{
 						{Replacement: "/"},
 					},
 				},
@@ -394,10 +394,10 @@ func replaceWithSlash(t *testing.T) {
 	// prefix is '/', the replacement should just end up being prepended
 	// to whatever the client URL is. No special handling of trailing '/'.
 	update(rh, vhost2,
-		func(vhost *Sesame_api_v1.HTTPProxy) {
+		func(vhost *sesame_api_v1.HTTPProxy) {
 			vhost.Spec.Routes[0].Conditions = matchconditions(prefixMatchCondition("/"))
-			vhost.Spec.Routes[0].PathRewritePolicy = &Sesame_api_v1.PathRewritePolicy{
-				ReplacePrefix: []Sesame_api_v1.ReplacePrefix{
+			vhost.Spec.Routes[0].PathRewritePolicy = &sesame_api_v1.PathRewritePolicy{
+				ReplacePrefix: []sesame_api_v1.ReplacePrefix{
 					{Replacement: "/bar"},
 				},
 			}
@@ -442,14 +442,14 @@ func artifactoryDocker(t *testing.T) {
 		WithPorts(v1.ServicePort{Port: 8080, TargetPort: intstr.FromInt(8080)}))
 
 	rh.OnAdd(fixture.NewProxy("artifactory/routes").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+		sesame_api_v1.HTTPProxySpec{
+			Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: "service",
 					Port: 8080,
 				}},
-				PathRewritePolicy: &Sesame_api_v1.PathRewritePolicy{
-					ReplacePrefix: []Sesame_api_v1.ReplacePrefix{
+				PathRewritePolicy: &sesame_api_v1.PathRewritePolicy{
+					ReplacePrefix: []sesame_api_v1.ReplacePrefix{
 						{Prefix: "/v2/container-sandbox", Replacement: "/artifactory/api/docker/container-sandbox/v2"},
 						{Prefix: "/v2/container-release", Replacement: "/artifactory/api/docker/container-release/v2"},
 						{Prefix: "/v2/container-external", Replacement: "/artifactory/api/docker/container-external/v2"},
@@ -461,11 +461,11 @@ func artifactoryDocker(t *testing.T) {
 	)
 
 	rh.OnAdd(fixture.NewProxy("artifactory/artifactory").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "artifactory.projectsesame.io",
 			},
-			Includes: []Sesame_api_v1.Include{
+			Includes: []sesame_api_v1.Include{
 				{Name: "routes", Conditions: matchconditions(prefixMatchCondition("/v2/container-sandbox"))},
 				{Name: "routes", Conditions: matchconditions(prefixMatchCondition("/v2/container-release"))},
 				{Name: "routes", Conditions: matchconditions(prefixMatchCondition("/v2/container-external"))},

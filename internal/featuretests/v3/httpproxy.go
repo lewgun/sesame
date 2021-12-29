@@ -16,58 +16,58 @@ package v3
 // HTTPProxy helpers
 
 import (
-	Sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
+	sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
 )
 
-func matchconditions(first Sesame_api_v1.MatchCondition, rest ...Sesame_api_v1.MatchCondition) []Sesame_api_v1.MatchCondition {
-	return append([]Sesame_api_v1.MatchCondition{first}, rest...)
+func matchconditions(first sesame_api_v1.MatchCondition, rest ...sesame_api_v1.MatchCondition) []sesame_api_v1.MatchCondition {
+	return append([]sesame_api_v1.MatchCondition{first}, rest...)
 }
 
-func prefixMatchCondition(prefix string) Sesame_api_v1.MatchCondition {
-	return Sesame_api_v1.MatchCondition{
+func prefixMatchCondition(prefix string) sesame_api_v1.MatchCondition {
+	return sesame_api_v1.MatchCondition{
 		Prefix: prefix,
 	}
 }
 
-func headerContainsMatchCondition(name, value string) Sesame_api_v1.MatchCondition {
-	return Sesame_api_v1.MatchCondition{
-		Header: &Sesame_api_v1.HeaderMatchCondition{
+func headerContainsMatchCondition(name, value string) sesame_api_v1.MatchCondition {
+	return sesame_api_v1.MatchCondition{
+		Header: &sesame_api_v1.HeaderMatchCondition{
 			Name:     name,
 			Contains: value,
 		},
 	}
 }
 
-func headerNotContainsMatchCondition(name, value string) Sesame_api_v1.MatchCondition {
-	return Sesame_api_v1.MatchCondition{
-		Header: &Sesame_api_v1.HeaderMatchCondition{
+func headerNotContainsMatchCondition(name, value string) sesame_api_v1.MatchCondition {
+	return sesame_api_v1.MatchCondition{
+		Header: &sesame_api_v1.HeaderMatchCondition{
 			Name:        name,
 			NotContains: value,
 		},
 	}
 }
 
-func headerExactMatchCondition(name, value string) Sesame_api_v1.MatchCondition {
-	return Sesame_api_v1.MatchCondition{
-		Header: &Sesame_api_v1.HeaderMatchCondition{
+func headerExactMatchCondition(name, value string) sesame_api_v1.MatchCondition {
+	return sesame_api_v1.MatchCondition{
+		Header: &sesame_api_v1.HeaderMatchCondition{
 			Name:  name,
 			Exact: value,
 		},
 	}
 }
 
-func headerNotExactMatchCondition(name, value string) Sesame_api_v1.MatchCondition {
-	return Sesame_api_v1.MatchCondition{
-		Header: &Sesame_api_v1.HeaderMatchCondition{
+func headerNotExactMatchCondition(name, value string) sesame_api_v1.MatchCondition {
+	return sesame_api_v1.MatchCondition{
+		Header: &sesame_api_v1.HeaderMatchCondition{
 			Name:     name,
 			NotExact: value,
 		},
 	}
 }
 
-func headerPresentMatchCondition(name string) Sesame_api_v1.MatchCondition {
-	return Sesame_api_v1.MatchCondition{
-		Header: &Sesame_api_v1.HeaderMatchCondition{
+func headerPresentMatchCondition(name string) sesame_api_v1.MatchCondition {
+	return sesame_api_v1.MatchCondition{
+		Header: &sesame_api_v1.HeaderMatchCondition{
 			Name:    name,
 			Present: true,
 		},

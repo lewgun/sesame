@@ -10,7 +10,7 @@ A big thank you to everyone who contributed to the release.
 PR https://github.com/projectsesame/sesame/pull/3627 added support for TLSRoute to enable Passthrough TCP Proxying to pods via SNI. See https://github.com/projectsesame/sesame/issues/3440 for additional information on TLSRoute feature requirements.
 
 ### GatewayClass Support
-PR https://github.com/projectsesame/sesame/pull/3659 added GatewayClass support through the gateway.controllerName configuration parameter. The gateway.namespace and gateway.name parameters are required when setting gateway.controllerName. When the cluster contains Gateway API CRDs and this parameter is set, Sesame will reconcile GatewayClass resources with the spec.controller field that matches gateway.controllerName. ControllerName should take the form of `projectsesame.io/<namespace>/Sesame`, where `<namespace>` is the namespace that Sesame runs in.
+PR https://github.com/projectsesame/sesame/pull/3659 added GatewayClass support through the gateway.controllerName configuration parameter. The gateway.namespace and gateway.name parameters are required when setting gateway.controllerName. When the cluster contains Gateway API CRDs and this parameter is set, Sesame will reconcile GatewayClass resources with the spec.controller field that matches gateway.controllerName. ControllerName should take the form of `projectsesame.io/<namespace>/sesame`, where `<namespace>` is the namespace that Sesame runs in.
 
 ## CA is No Longer Ignored when Downstream "Skip Verify" is True
 With PR https://github.com/projectsesame/sesame/pull/3661, Sesame will no longer ignore a certificate under the following conditions:

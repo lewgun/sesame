@@ -32,7 +32,7 @@ Implementations may also define their own Route objects, at the cost of interope
 
 In terms of its stated goals, Sesame is aiming at being an ingress controller - that is, a Layer 7 proxy with some api gateway functions.
 Currently, Sesame provides "TCP Proxying" that allows the forwarding of TLS streams based on the SNI information, which is precisely what the Gateway API TLSRoute object is for.
-If Project Sesame (the organisation) does add support for TCP and UDP forwarding, it will not be in the projectsesame/Sesame repo, but will be a separate repo.
+If Project Sesame (the organisation) does add support for TCP and UDP forwarding, it will not be in the projectsesame/sesame repo, but will be a separate repo.
 
 This design is intended to cover the initial alpha releases of the Gateway API. We will aim to implement the core featureset of the APIs at that point.
 We will then work with the upstream community on features that Sesame and HTTPProxy currently support, but the Gateway API do not, and how best to represent those features in the APIs.
@@ -54,7 +54,7 @@ We see this as a chance for HTTPProxy to test out ideas for Gateway API function
 
 ## Gateway API implementation surface area
 
-Sesame's support for the Gateway API will include support for the HTTPRoute and TLSRoute objects only, not any other type of Route - this includes no TCPRoute or UDPRoute support. Sesame is a layer 7 ingress controller, and the layer 4 load balancing implied by TCPRoute and UDPRoute is out of scope for this tool (that is, projectsesame/Sesame). Project Sesame (the organisation) may investigate a Gateway API based layer 4 solution in the future, but that effort will not be in projectsesame/Sesame.
+Sesame's support for the Gateway API will include support for the HTTPRoute and TLSRoute objects only, not any other type of Route - this includes no TCPRoute or UDPRoute support. Sesame is a layer 7 ingress controller, and the layer 4 load balancing implied by TCPRoute and UDPRoute is out of scope for this tool (that is, projectsesame/sesame). Project Sesame (the organisation) may investigate a Gateway API based layer 4 solution in the future, but that effort will not be in projectsesame/sesame.
 
 ## Sesame Gateway model
 
@@ -216,7 +216,7 @@ When config in the CRD changes we will need to gracefully stop the dependent ing
 ### Managed & Unmanaged Envoy
 
 Sesame can optionally provision Envoy infrastructure in a Kubernetes cluster. A new field will be added to the Sesame configuration CRD which will describe how an Envoy fleet should be configured.
-If this field is set, then Sesame will dynamically provision a fleet of Envoys with a corresponding service matching the configuration specified. The field will be named `envoy` and initially contain the [NetworkPublishing structs](https://github.com/projectsesame/sesame-operator/blob/b8fe3a30b7e80f2943c0c6ae593f5ce90ea929bc/api/v1alpha1/Sesame_types.go#L225) from the Operator.
+If this field is set, then Sesame will dynamically provision a fleet of Envoys with a corresponding service matching the configuration specified. The field will be named `envoy` and initially contain the [NetworkPublishing structs](https://github.com/projectsesame/sesame-operator/blob/b8fe3a30b7e80f2943c0c6ae593f5ce90ea929bc/api/v1alpha1/sesame_types.go#L225) from the Operator.
 
 Example CRD spec YAML showing how Envoy will be managed by Sesame and exposed via an AWE Load Balancer:
 

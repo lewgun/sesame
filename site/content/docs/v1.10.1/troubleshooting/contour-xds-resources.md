@@ -8,9 +8,9 @@ Do this is via `kubectl exec`:
 
 ```bash
 # Get one of the pods that matches the examples/daemonset
-$ Sesame_POD=$(kubectl -n projectsesame get pod -l app=sesame -o jsonpath='{.items[0].metadata.name}')
+$ SESAME_POD=$(kubectl -n projectsesame get pod -l app=sesame -o jsonpath='{.items[0].metadata.name}')
 # Do the port forward to that pod
-$ kubectl -n projectsesame exec $Sesame_POD -c sesame -- sesame cli lds --cafile=/ca/cacert.pem --cert-file=/certs/tls.crt --key-file=/certs/tls.key
+$ kubectl -n projectsesame exec $SESAME_POD -c sesame -- sesame cli lds --cafile=/ca/cacert.pem --cert-file=/certs/tls.crt --key-file=/certs/tls.key
 ```
 
 Which will stream changes to the LDS api endpoint to your terminal.

@@ -2,7 +2,7 @@
 title: Announcing Sesame 1.0&#58; A Proxy for Your Multi-Tenant Future
 excerpt: The Journey from 0.1 to 1.0
 author_name: Sesame Team
-#author_avatar: /img/Sesame.svg
+#author_avatar: /img/sesame.svg
 categories: [kubernetes]
 # Tag should match author to drive author pages
 tags: ['Sesame Team', 'release']
@@ -68,7 +68,7 @@ The sign of a strong community is how users communicate through Slack and GitHub
 [![alexbrand](https://avatars2.githubusercontent.com/u/545723?v=4&s=48)](https://github.com/alexbrand)
 [![alvaroaleman](https://avatars2.githubusercontent.com/u/6496100?v=4&s=48)](https://github.com/alvaroaleman)
 [![andrewsykim](https://avatars0.githubusercontent.com/u/12699319?v=4&s=48)](https://github.com/andrewsykim)
-[![arminbuerkle](/img/Sesame-1.0/22750465.png)](https://github.com/arminbuerkle)
+[![arminbuerkle](/img/sesame-1.0/22750465.png)](https://github.com/arminbuerkle)
 [![Atul9](https://avatars1.githubusercontent.com/u/3390330?v=4&s=48)](https://github.com/Atul9)
 [![awprice](https://avatars3.githubusercontent.com/u/2804025?v=4&s=48)](https://github.com/awprice)
 [![bgagnon](https://avatars2.githubusercontent.com/u/81865?v=4&s=48)](https://github.com/bgagnon)
@@ -83,7 +83,7 @@ The sign of a strong community is how users communicate through Slack and GitHub
 [![embano1](https://avatars0.githubusercontent.com/u/15986659?v=4&s=48)](https://github.com/embano1)
 [![emman27](https://avatars0.githubusercontent.com/u/6295583?v=4&s=48)](https://github.com/emman27)
 [![ffahri](https://avatars2.githubusercontent.com/u/13694962?v=4&s=48)](https://github.com/ffahri)
-[![glerchundi](/img/Sesame-1.0/2232214.png)](https://github.com/glerchundi)
+[![glerchundi](/img/sesame-1.0/2232214.png)](https://github.com/glerchundi)
 [![HerrmannHinz](https://avatars0.githubusercontent.com/u/11093419?v=4&s=48)](https://github.com/HerrmannHinz)
 [![jbeda](https://avatars2.githubusercontent.com/u/37310?v=4&s=48)](https://github.com/jbeda)
 [![jelmersnoeck](https://avatars1.githubusercontent.com/u/815655?v=4&s=48)](https://github.com/jelmersnoeck)
@@ -94,8 +94,8 @@ The sign of a strong community is how users communicate through Slack and GitHub
 [![joonathan](https://avatars0.githubusercontent.com/u/3045?v=4&s=48)](https://github.com/joonathan)
 [![josebiro](https://avatars0.githubusercontent.com/u/1455144?v=4&s=48)](https://github.com/josebiro)
 [![joshrosso](https://avatars2.githubusercontent.com/u/6200057?v=4&s=48)](https://github.com/joshrosso)
-[![jpeach](/img/Sesame-1.0/9917.png)](https://github.com/jpeach)
-[![Lookyan](/img/Sesame-1.0/1040646.png)](https://github.com/Lookyan)
+[![jpeach](/img/sesame-1.0/9917.png)](https://github.com/jpeach)
+[![Lookyan](/img/sesame-1.0/1040646.png)](https://github.com/Lookyan)
 [![lostllama](https://avatars2.githubusercontent.com/u/9258568?v=4&s=48)](https://github.com/lostllama)
 [![lucasreed](https://avatars0.githubusercontent.com/u/6800091?v=4&s=48)](https://github.com/lucasreed)
 [![mitsutaka](https://avatars2.githubusercontent.com/u/557782?v=4&s=48)](https://github.com/mitsutaka)
@@ -125,7 +125,7 @@ The sign of a strong community is how users communicate through Slack and GitHub
 [![shivanshu21](https://avatars2.githubusercontent.com/u/14923644?v=4&s=48)](https://github.com/shivanshu21)
 [![stephenmoloney](https://avatars3.githubusercontent.com/u/12668653?v=4&s=48)](https://github.com/stephenmoloney)
 [![stevesloka](https://avatars3.githubusercontent.com/u/1048184?v=4&s=48)](https://github.com/stevesloka)
-[![sudeeptoroy](/img/Sesame-1.0/10099903.png)](https://github.com/sudeeptoroy)
+[![sudeeptoroy](/img/sesame-1.0/10099903.png)](https://github.com/sudeeptoroy)
 [![tasdikrahman](https://avatars1.githubusercontent.com/u/4672518?v=4&s=48)](https://github.com/tasdikrahman)
 [![uablrek](https://avatars1.githubusercontent.com/u/37046727?v=4&s=48)](https://github.com/uablrek)
 [![unicell](https://avatars1.githubusercontent.com/u/35352?v=4&s=48)](https://github.com/unicell)
@@ -138,9 +138,9 @@ The sign of a strong community is how users communicate through Slack and GitHub
 [![youngnick](https://avatars0.githubusercontent.com/u/9346599?v=4&s=48)](https://github.com/youngnick)
 [![yvespp](https://avatars0.githubusercontent.com/u/15231595?v=4&s=48)](https://github.com/yvespp)
 [![zhilingc](https://avatars1.githubusercontent.com/u/15104168?v=4&s=48)](https://github.com/zhilingc)
-[![zxvdr](/img/Sesame-1.0/223340.png)](https://github.com/zxvdr)
+[![zxvdr](/img/sesame-1.0/223340.png)](https://github.com/zxvdr)
 
 _**Note**: Stats above were taken on  Oct. 31, 2019._
 
 [1]: {{< param github_url >}}/commit/788feabc67c4da76cd1ae3c9ac1998b43cb0e2f3
-[2]: {% link img/Sesame-1.0/Sesame-1.0-stats.png %}
+[2]: {% link img/sesame-1.0/sesame-1.0-stats.png %}

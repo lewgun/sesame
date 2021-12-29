@@ -18,7 +18,7 @@ import (
 
 	envoy_listener_v3 "github.com/envoyproxy/go-control-plane/envoy/config/listener/v3"
 	envoy_discovery_v3 "github.com/envoyproxy/go-control-plane/envoy/service/discovery/v3"
-	Sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
+	sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
 	"github.com/projectsesame/sesame/internal/dag"
 	envoy_v3 "github.com/projectsesame/sesame/internal/envoy/v3"
 	"github.com/projectsesame/sesame/internal/featuretests"
@@ -58,18 +58,18 @@ func TestDownstreamTLSCertificateValidation(t *testing.T) {
 	rh.OnAdd(service)
 
 	proxy := fixture.NewProxy("example.com").
-		WithSpec(Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		WithSpec(sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "example.com",
-				TLS: &Sesame_api_v1.TLS{
+				TLS: &sesame_api_v1.TLS{
 					SecretName: serverTLSSecret.Name,
-					ClientValidation: &Sesame_api_v1.DownstreamValidation{
+					ClientValidation: &sesame_api_v1.DownstreamValidation{
 						CACertificate: clientCASecret.Name,
 					},
 				},
 			},
-			Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+			Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: "kuard",
 					Port: 8080,
 				}},
@@ -108,18 +108,18 @@ func TestDownstreamTLSCertificateValidation(t *testing.T) {
 	}).Status(proxy).IsValid()
 
 	rh.OnUpdate(proxy, fixture.NewProxy("example.com").
-		WithSpec(Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		WithSpec(sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "example.com",
-				TLS: &Sesame_api_v1.TLS{
+				TLS: &sesame_api_v1.TLS{
 					SecretName: serverTLSSecret.Name,
-					ClientValidation: &Sesame_api_v1.DownstreamValidation{
+					ClientValidation: &sesame_api_v1.DownstreamValidation{
 						SkipClientCertValidation: true,
 					},
 				},
 			},
-			Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+			Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: "kuard",
 					Port: 8080,
 				}},
@@ -154,19 +154,19 @@ func TestDownstreamTLSCertificateValidation(t *testing.T) {
 	}).Status(proxy).IsValid()
 
 	rh.OnUpdate(proxy, fixture.NewProxy("example.com").
-		WithSpec(Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		WithSpec(sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "example.com",
-				TLS: &Sesame_api_v1.TLS{
+				TLS: &sesame_api_v1.TLS{
 					SecretName: serverTLSSecret.Name,
-					ClientValidation: &Sesame_api_v1.DownstreamValidation{
+					ClientValidation: &sesame_api_v1.DownstreamValidation{
 						SkipClientCertValidation: true,
 						CACertificate:            clientCASecret.Name,
 					},
 				},
 			},
-			Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+			Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: "kuard",
 					Port: 8080,
 				}},

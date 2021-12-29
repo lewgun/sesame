@@ -107,5 +107,5 @@ Next steps:
 
 Run Sesame:
 
-    Sesame serve --insecure --xds-address=0.0.0.0 --envoy-service-http-port=80 --envoy-service-https-port=443
+    sesame serve --insecure --xds-address=0.0.0.0 --envoy-service-http-port=80 --envoy-service-https-port=443
 EOF

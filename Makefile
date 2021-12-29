@@ -1,7 +1,8 @@
 ORG = projectsesame
 PROJECT = sesame
 MODULE = github.com/$(ORG)/$(PROJECT)
-REGISTRY ?= ghcr.io/projectsesame
+# REGISTRY ?= ghcr.io/projectsesame
+REGISTRY ?= 10.99.3.1/projectsesame
 IMAGE := $(REGISTRY)/$(PROJECT)
 SRCDIRS := ./cmd ./internal ./apis
 LOCAL_BOOTSTRAP_CONFIG = localenvoyconfig.yaml
@@ -18,9 +19,10 @@ LOCALIP ?= $(shell ifconfig | grep inet | grep -v '::' | grep -v 127.0.0.1 | hea
 SESAME_E2E_LOCAL_HOST ?= $(LOCALIP)
 # Variables needed for running e2e and upgrade tests.
 SESAME_UPGRADE_FROM_VERSION ?= $(shell ./test/scripts/get-sesame-upgrade-from-version.sh)
-SESAME_E2E_IMAGE ?= ghcr.io/projectsesame/sesame:main
+SESAME_E2E_IMAGE ?= 10.99.3.1/projectsesame/sesame:main
 
-TAG_LATEST ?= false
+# TAG_LATEST ?= false
+TAG_LATEST ?= true
 
 ifeq ($(TAG_LATEST), true)
 	IMAGE_TAGS = \

@@ -142,8 +142,8 @@ func registerServe(app *kingpin.Application) (*kingpin.CmdClause, *serveContext)
 	serve.Flag("health-port", "Port the health HTTP endpoint will bind to.").PlaceHolder("<port>").IntVar(&ctx.healthPort)
 
 	serve.Flag("sesame-cafile", "CA bundle file name for serving gRPC with TLS.").Envar("SESAME_CAFILE").StringVar(&ctx.caFile)
-	serve.Flag("sesame-cert-file", "Sesame certificate file name for serving gRPC over TLS.").PlaceHolder("/path/to/file").Envar("Sesame_CERT_FILE").StringVar(&ctx.SesameCert)
-	serve.Flag("sesame-key-file", "Sesame key file name for serving gRPC over TLS.").PlaceHolder("/path/to/file").Envar("Sesame_KEY_FILE").StringVar(&ctx.SesameKey)
+	serve.Flag("sesame-cert-file", "Sesame certificate file name for serving gRPC over TLS.").PlaceHolder("/path/to/file").Envar("SESAME_CERT_FILE").StringVar(&ctx.SesameCert)
+	serve.Flag("sesame-key-file", "Sesame key file name for serving gRPC over TLS.").PlaceHolder("/path/to/file").Envar("SESAME_KEY_FILE").StringVar(&ctx.SesameKey)
 	serve.Flag("insecure", "Allow serving without TLS secured gRPC.").BoolVar(&ctx.PermitInsecureGRPC)
 	serve.Flag("root-namespaces", "Restrict sesame to searching these namespaces for root ingress routes.").PlaceHolder("<ns,ns>").StringVar(&ctx.rootNamespaces)
 
@@ -240,7 +240,7 @@ func (s *Server) doServe() error {
 	// Get the SesameConfiguration CRD if specified
 	if len(s.ctx.sesameConfigurationName) > 0 {
 		// Determine the name/namespace of the configuration resource utilizing the environment
-		// variable "Sesame_NAMESPACE" which should exist on the Sesame deployment.
+		// variable "SESAME_NAMESPACE" which should exist on the Sesame deployment.
 		//
 		// If the env variable is not present, it will default to "projectsesame".
 		sesameNamespace, found := os.LookupEnv("SESAME_NAMESPACE")

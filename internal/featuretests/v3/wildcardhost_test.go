@@ -16,7 +16,7 @@ package v3
 import (
 	"testing"
 
-	Sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
+	sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
 
 	envoy_listener_v3 "github.com/envoyproxy/go-control-plane/envoy/config/listener/v3"
 	envoy_route_v3 "github.com/envoyproxy/go-control-plane/envoy/config/route/v3"
@@ -119,11 +119,11 @@ func TestHTTPProxyWildcardFQDN(t *testing.T) {
 	rh.OnAdd(svc)
 
 	rh.OnAdd(fixture.NewProxy("wildcard").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "*.projectsesame.io",
-			}, Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+			}, Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: "svc",
 					Port: 80,
 				}},

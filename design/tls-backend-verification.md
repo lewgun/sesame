@@ -110,7 +110,7 @@ Test cases will need to be updated.
 `envoy.UpstreamTLSContext` will have to be refactored to take the `UpstreamValidation` parameters if provided.
 Test cases will need to be updated.
 
-### Changes to internal/Sesame
+### Changes to internal/sesame
 
 No changes will be required to the code in `cluster.go`.
 Test cases will need to be updated.

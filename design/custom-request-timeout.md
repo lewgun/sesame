@@ -316,7 +316,7 @@ spec:
         perTryTimeout: 200ms
 ```
 
-From the YAML we can see `http://Sesame.example.com/` has different policy than `http://Sesame.example.com/httpbin/`
+From the YAML we can see `http://sesame.example.com/` has different policy than `http://sesame.example.com/httpbin/`
 
 Based on the arguments passed with `/status/{status}` and `/delay/{delay}` we will see the corresponding stats in envoy
 increase by sending a curl request inside the Envoy's container - `curl http://localhost:9001/stats`

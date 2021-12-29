@@ -46,7 +46,7 @@ Next, we need to generate a keypair for Sesame.
 First, we make a new private key:
 
 ```
-$ openssl genrsa -out certs/Sesamekey.pem 2048
+$ openssl genrsa -out certs/sesamekey.pem 2048
 ```
 
 Then, we create a CSR and have our CA sign the CSR and issue a certificate.
@@ -54,20 +54,20 @@ This uses the file [_integration/cert-Sesame.ext][2], which ensures that at leas
 This is required for the handshake to succeed, as `Sesame bootstrap` configures Envoy to pass this as the SNI server name for the connection.
 
 ```
-$ openssl req -new -key certs/Sesamekey.pem \
-	-out certs/Sesame.csr \
+$ openssl req -new -key certs/sesamekey.pem \
+	-out certs/sesame.csr \
 	-subj "/O=Project Sesame/CN=Sesame"
 
-$ openssl x509 -req -in certs/Sesame.csr \
+$ openssl x509 -req -in certs/sesame.csr \
     -CA certs/cacert.pem \
     -CAkey certs/cakey.pem \
     -CAcreateserial \
-    -out certs/Sesamecert.pem \
+    -out certs/sesamecert.pem \
     -days 1825 -sha256 \
     -extfile _integration/cert-Sesame.ext
 ```
 
-At this point, the Sesame certificate and key are in the files `certs/Sesamecert.pem` and `certs/Sesamekey.pem` respectively.
+At this point, the Sesame certificate and key are in the files `certs/sesamecert.pem` and `certs/sesamekey.pem` respectively.
 
 ### Generating Envoy's keypair
 
@@ -102,8 +102,8 @@ Next, we create the required Secrets in the target Kubernetes cluster:
 
 ```bash
 $ kubectl create secret -n projectsesame generic Sesamecert \
-        --from-file=tls.key=./certs/Sesamekey.pem \
-        --from-file=tls.crt=./certs/Sesamecert.pem \
+        --from-file=tls.key=./certs/sesamekey.pem \
+        --from-file=tls.crt=./certs/sesamecert.pem \
         --from-file=ca.crt=./certs/cacert.pem \
         --save-config
 
@@ -129,8 +129,8 @@ The secrets can be updated in-place by running:
 
 ```bash
 $ kubectl create secret -n projectsesame generic Sesamecert \
-        --from-file=tls.key=./certs/Sesamekey.pem \
-        --from-file=tls.crt=./certs/Sesamecert.pem \
+        --from-file=tls.key=./certs/sesamekey.pem \
+        --from-file=tls.crt=./certs/sesamecert.pem \
         --from-file=ca.crt=./certs/cacert.pem \
         --dry-run -o json \
         | kubectl apply -f -
@@ -146,7 +146,7 @@ $ kubectl create secret -n projectsesame generic envoycert \
 There are few preconditions that need to be met before Envoy can automatically reload certificate and key files:
 
 - Envoy must be version v1.14.1 or later
-- The bootstrap configuration must be generated with `Sesame bootstrap` using the `--resources-dir` argument, see [examples/Sesame/03-envoy.yaml][4]
+- The bootstrap configuration must be generated with `Sesame bootstrap` using the `--resources-dir` argument, see [examples/sesame/03-envoy.yaml][4]
 
 ### Rotate using the Sesame-certgen job
 
@@ -159,10 +159,10 @@ When using the built-in Sesame certificate generation, the following steps can b
 ## Conclusion
 
 Once this process is done, the certificates will be present as Secrets in the `projectsesame` namespace, as required by
-[examples/Sesame][5].
+[examples/sesame][5].
 
-[1]: {{< param github_url >}}/tree/{{< param version >}}/examples/Sesame/02-job-certgen.yaml
+[1]: {{< param github_url >}}/tree/{{< param version >}}/examples/sesame/02-job-certgen.yaml
 [2]: {{< param github_url >}}/tree/{{< param version >}}/_integration/cert-Sesame.ext
 [3]: {{< param github_url >}}/tree/{{< param version >}}/_integration/cert-envoy.ext
-[4]: {{< param github_url >}}/tree/{{< param version >}}/examples/Sesame/03-envoy.yaml
-[5]: {{< param github_url >}}/tree/{{< param version >}}/examples/Sesame
+[4]: {{< param github_url >}}/tree/{{< param version >}}/examples/sesame/03-envoy.yaml
+[5]: {{< param github_url >}}/tree/{{< param version >}}/examples/sesame

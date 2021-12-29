@@ -55,11 +55,11 @@ Related Issues and PRs: #3393
 # Deprecation & Removal Notices
 - The following Prometheus Gauges have been removed in favor of Gauges added in Sesame 1.13.0 with more idiomatic names. Any dashboard and alert queries referring to the old names must be updated to use the new metrics.
    ```
-   Sesame_httpproxy_total -> Sesame_httpproxy
-   Sesame_httpproxy_invalid_total  -> Sesame_httpproxy_invalid
-   Sesame_httpproxy_orphaned_total  -> Sesame_httpproxy_orphaned
-   Sesame_httpproxy_valid_total  -> Sesame_httpproxy_valid
-   Sesame_httpproxy_root_total  -> Sesame_httpproxy_root
+   sesame_httpproxy_total -> sesame_httpproxy
+   sesame_httpproxy_invalid_total  -> sesame_httpproxy_invalid
+   sesame_httpproxy_orphaned_total  -> sesame_httpproxy_orphaned
+   sesame_httpproxy_valid_total  -> sesame_httpproxy_valid
+   sesame_httpproxy_root_total  -> sesame_httpproxy_root
    ```
 
 # Upgrading

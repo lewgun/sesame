@@ -48,7 +48,7 @@ On Minikube, to get the IP address of the Sesame service run:
 $ minikube service -n projectsesame envoy --url
 ```
 
-The response is always an IP address, for example `http://192.168.99.100:30588`. This is used as Sesame_IP in the rest of the documentation.
+The response is always an IP address, for example `http://192.168.99.100:30588`. This is used as SESAME_IP in the rest of the documentation.
 
 #### kind
 
@@ -76,7 +76,7 @@ This file is in the `examples/kind` directory:
 $ kind create cluster --config examples/kind/kind-expose-port.yaml
 ```
 
-Then, your Sesame_IP (as used below) will just be `localhost:80`.
+Then, your SESAME_IP (as used below) will just be `localhost:80`.
 
 _Note: We've created a public DNS record (`local.projectsesame.io`) which is configured to resolve to `127.0.0.1``. This allows you to use a real domain name in your kind cluster._
 
@@ -148,7 +148,7 @@ httpproxy.projectsesame.io/kuard      kuard.local         <SECRET NAME IF TLS US
 In your terminal, use curl with the IP or DNS address of the Sesame Service to send a request to the demo application:
 
 ```sh
-$ curl -H 'Host: kuard.local' ${Sesame_IP}
+$ curl -H 'Host: kuard.local' ${SESAME_IP}
 ```
 
 ## Running without a Kubernetes LoadBalancer
@@ -209,11 +209,11 @@ $ kubectl delete ns sesame-operator
 ```
 
 [1]: #running-without-a-kubernetes-loadbalancer
-[2]: {{< param github_url>}}/tree/{{< param version >}}/examples/Sesame
+[2]: {{< param github_url>}}/tree/{{< param version >}}/examples/sesame
 [3]: #host-networking
 [4]: /guides/proxy-proto.md
 [5]: https://github.com/kubernetes-up-and-running/kuard
-[7]: {{< param github_url>}}/tree/{{< param version >}}/examples/Sesame/02-service-envoy.yaml
+[7]: {{< param github_url>}}/tree/{{< param version >}}/examples/sesame/02-service-envoy.yaml
 [8]: /getting-started.md
 [9]: config/fundamentals.md
 [10]: /guides/deploy-aws-nlb.md

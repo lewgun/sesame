@@ -23,7 +23,7 @@ import (
 	http "github.com/envoyproxy/go-control-plane/envoy/extensions/filters/network/http_connection_manager/v3"
 	envoy_discovery_v3 "github.com/envoyproxy/go-control-plane/envoy/service/discovery/v3"
 	"github.com/envoyproxy/go-control-plane/pkg/wellknown"
-	Sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
+	sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
 	"github.com/projectsesame/sesame/internal/dag"
 	envoy_v3 "github.com/projectsesame/sesame/internal/envoy/v3"
 	"github.com/projectsesame/sesame/internal/featuretests"
@@ -38,18 +38,18 @@ import (
 )
 
 func globalRateLimitFilterExists(t *testing.T, rh cache.ResourceEventHandler, c *Sesame) {
-	p := &Sesame_api_v1.HTTPProxy{
+	p := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Namespace: "default",
 			Name:      "proxy1",
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "foo.com",
 			},
-			Routes: []Sesame_api_v1.Route{
+			Routes: []sesame_api_v1.Route{
 				{
-					Services: []Sesame_api_v1.Service{
+					Services: []sesame_api_v1.Service{
 						{
 							Name: "s1",
 							Port: 80,
@@ -102,18 +102,18 @@ func globalRateLimitFilterExists(t *testing.T, rh cache.ResourceEventHandler, c 
 }
 
 func globalRateLimitNoRateLimitsDefined(t *testing.T, rh cache.ResourceEventHandler, c *Sesame, tls tlsConfig) {
-	p := &Sesame_api_v1.HTTPProxy{
+	p := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Namespace: "default",
 			Name:      "proxy1",
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "foo.com",
 			},
-			Routes: []Sesame_api_v1.Route{
+			Routes: []sesame_api_v1.Route{
 				{
-					Services: []Sesame_api_v1.Service{
+					Services: []sesame_api_v1.Service{
 						{
 							Name: "s1",
 							Port: 80,
@@ -125,7 +125,7 @@ func globalRateLimitNoRateLimitsDefined(t *testing.T, rh cache.ResourceEventHand
 	}
 
 	if tls.enabled {
-		p.Spec.VirtualHost.TLS = &Sesame_api_v1.TLS{
+		p.Spec.VirtualHost.TLS = &sesame_api_v1.TLS{
 			SecretName:                "tls-cert",
 			EnableFallbackCertificate: tls.fallbackEnabled,
 		}
@@ -186,24 +186,24 @@ func globalRateLimitNoRateLimitsDefined(t *testing.T, rh cache.ResourceEventHand
 }
 
 func globalRateLimitVhostRateLimitDefined(t *testing.T, rh cache.ResourceEventHandler, c *Sesame, tls tlsConfig) {
-	p := &Sesame_api_v1.HTTPProxy{
+	p := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Namespace: "default",
 			Name:      "proxy1",
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "foo.com",
-				RateLimitPolicy: &Sesame_api_v1.RateLimitPolicy{
-					Global: &Sesame_api_v1.GlobalRateLimitPolicy{
-						Descriptors: []Sesame_api_v1.RateLimitDescriptor{
+				RateLimitPolicy: &sesame_api_v1.RateLimitPolicy{
+					Global: &sesame_api_v1.GlobalRateLimitPolicy{
+						Descriptors: []sesame_api_v1.RateLimitDescriptor{
 							{
-								Entries: []Sesame_api_v1.RateLimitDescriptorEntry{
+								Entries: []sesame_api_v1.RateLimitDescriptorEntry{
 									{
-										RemoteAddress: &Sesame_api_v1.RemoteAddressDescriptor{},
+										RemoteAddress: &sesame_api_v1.RemoteAddressDescriptor{},
 									},
 									{
-										GenericKey: &Sesame_api_v1.GenericKeyDescriptor{Value: "generic-key-value"},
+										GenericKey: &sesame_api_v1.GenericKeyDescriptor{Value: "generic-key-value"},
 									},
 								},
 							},
@@ -211,9 +211,9 @@ func globalRateLimitVhostRateLimitDefined(t *testing.T, rh cache.ResourceEventHa
 					},
 				},
 			},
-			Routes: []Sesame_api_v1.Route{
+			Routes: []sesame_api_v1.Route{
 				{
-					Services: []Sesame_api_v1.Service{
+					Services: []sesame_api_v1.Service{
 						{
 							Name: "s1",
 							Port: 80,
@@ -225,7 +225,7 @@ func globalRateLimitVhostRateLimitDefined(t *testing.T, rh cache.ResourceEventHa
 	}
 
 	if tls.enabled {
-		p.Spec.VirtualHost.TLS = &Sesame_api_v1.TLS{
+		p.Spec.VirtualHost.TLS = &sesame_api_v1.TLS{
 			SecretName:                "tls-cert",
 			EnableFallbackCertificate: tls.fallbackEnabled,
 		}
@@ -278,33 +278,33 @@ func globalRateLimitVhostRateLimitDefined(t *testing.T, rh cache.ResourceEventHa
 }
 
 func globalRateLimitRouteRateLimitDefined(t *testing.T, rh cache.ResourceEventHandler, c *Sesame, tls tlsConfig) {
-	p := &Sesame_api_v1.HTTPProxy{
+	p := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Namespace: "default",
 			Name:      "proxy1",
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "foo.com",
 			},
-			Routes: []Sesame_api_v1.Route{
+			Routes: []sesame_api_v1.Route{
 				{
-					Services: []Sesame_api_v1.Service{
+					Services: []sesame_api_v1.Service{
 						{
 							Name: "s1",
 							Port: 80,
 						},
 					},
-					RateLimitPolicy: &Sesame_api_v1.RateLimitPolicy{
-						Global: &Sesame_api_v1.GlobalRateLimitPolicy{
-							Descriptors: []Sesame_api_v1.RateLimitDescriptor{
+					RateLimitPolicy: &sesame_api_v1.RateLimitPolicy{
+						Global: &sesame_api_v1.GlobalRateLimitPolicy{
+							Descriptors: []sesame_api_v1.RateLimitDescriptor{
 								{
-									Entries: []Sesame_api_v1.RateLimitDescriptorEntry{
+									Entries: []sesame_api_v1.RateLimitDescriptorEntry{
 										{
-											RemoteAddress: &Sesame_api_v1.RemoteAddressDescriptor{},
+											RemoteAddress: &sesame_api_v1.RemoteAddressDescriptor{},
 										},
 										{
-											GenericKey: &Sesame_api_v1.GenericKeyDescriptor{Value: "generic-key-value"},
+											GenericKey: &sesame_api_v1.GenericKeyDescriptor{Value: "generic-key-value"},
 										},
 									},
 								},
@@ -317,7 +317,7 @@ func globalRateLimitRouteRateLimitDefined(t *testing.T, rh cache.ResourceEventHa
 	}
 
 	if tls.enabled {
-		p.Spec.VirtualHost.TLS = &Sesame_api_v1.TLS{
+		p.Spec.VirtualHost.TLS = &sesame_api_v1.TLS{
 			SecretName:                "tls-cert",
 			EnableFallbackCertificate: tls.fallbackEnabled,
 		}
@@ -371,24 +371,24 @@ func globalRateLimitRouteRateLimitDefined(t *testing.T, rh cache.ResourceEventHa
 }
 
 func globalRateLimitVhostAndRouteRateLimitDefined(t *testing.T, rh cache.ResourceEventHandler, c *Sesame, tls tlsConfig) {
-	p := &Sesame_api_v1.HTTPProxy{
+	p := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Namespace: "default",
 			Name:      "proxy1",
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "foo.com",
-				RateLimitPolicy: &Sesame_api_v1.RateLimitPolicy{
-					Global: &Sesame_api_v1.GlobalRateLimitPolicy{
-						Descriptors: []Sesame_api_v1.RateLimitDescriptor{
+				RateLimitPolicy: &sesame_api_v1.RateLimitPolicy{
+					Global: &sesame_api_v1.GlobalRateLimitPolicy{
+						Descriptors: []sesame_api_v1.RateLimitDescriptor{
 							{
-								Entries: []Sesame_api_v1.RateLimitDescriptorEntry{
+								Entries: []sesame_api_v1.RateLimitDescriptorEntry{
 									{
-										RemoteAddress: &Sesame_api_v1.RemoteAddressDescriptor{},
+										RemoteAddress: &sesame_api_v1.RemoteAddressDescriptor{},
 									},
 									{
-										GenericKey: &Sesame_api_v1.GenericKeyDescriptor{Value: "generic-key-value-vhost"},
+										GenericKey: &sesame_api_v1.GenericKeyDescriptor{Value: "generic-key-value-vhost"},
 									},
 								},
 							},
@@ -396,24 +396,24 @@ func globalRateLimitVhostAndRouteRateLimitDefined(t *testing.T, rh cache.Resourc
 					},
 				},
 			},
-			Routes: []Sesame_api_v1.Route{
+			Routes: []sesame_api_v1.Route{
 				{
-					Services: []Sesame_api_v1.Service{
+					Services: []sesame_api_v1.Service{
 						{
 							Name: "s1",
 							Port: 80,
 						},
 					},
-					RateLimitPolicy: &Sesame_api_v1.RateLimitPolicy{
-						Global: &Sesame_api_v1.GlobalRateLimitPolicy{
-							Descriptors: []Sesame_api_v1.RateLimitDescriptor{
+					RateLimitPolicy: &sesame_api_v1.RateLimitPolicy{
+						Global: &sesame_api_v1.GlobalRateLimitPolicy{
+							Descriptors: []sesame_api_v1.RateLimitDescriptor{
 								{
-									Entries: []Sesame_api_v1.RateLimitDescriptorEntry{
+									Entries: []sesame_api_v1.RateLimitDescriptorEntry{
 										{
-											RemoteAddress: &Sesame_api_v1.RemoteAddressDescriptor{},
+											RemoteAddress: &sesame_api_v1.RemoteAddressDescriptor{},
 										},
 										{
-											GenericKey: &Sesame_api_v1.GenericKeyDescriptor{Value: "generic-key-value"},
+											GenericKey: &sesame_api_v1.GenericKeyDescriptor{Value: "generic-key-value"},
 										},
 									},
 								},
@@ -426,7 +426,7 @@ func globalRateLimitVhostAndRouteRateLimitDefined(t *testing.T, rh cache.Resourc
 	}
 
 	if tls.enabled {
-		p.Spec.VirtualHost.TLS = &Sesame_api_v1.TLS{
+		p.Spec.VirtualHost.TLS = &sesame_api_v1.TLS{
 			SecretName:                "tls-cert",
 			EnableFallbackCertificate: tls.fallbackEnabled,
 		}
@@ -496,45 +496,45 @@ func globalRateLimitVhostAndRouteRateLimitDefined(t *testing.T, rh cache.Resourc
 }
 
 func globalRateLimitMultipleDescriptorsAndEntries(t *testing.T, rh cache.ResourceEventHandler, c *Sesame) {
-	p := &Sesame_api_v1.HTTPProxy{
+	p := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Namespace: "default",
 			Name:      "proxy1",
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "foo.com",
 			},
-			Routes: []Sesame_api_v1.Route{
+			Routes: []sesame_api_v1.Route{
 				{
-					Services: []Sesame_api_v1.Service{
+					Services: []sesame_api_v1.Service{
 						{
 							Name: "s1",
 							Port: 80,
 						},
 					},
-					RateLimitPolicy: &Sesame_api_v1.RateLimitPolicy{
-						Global: &Sesame_api_v1.GlobalRateLimitPolicy{
-							Descriptors: []Sesame_api_v1.RateLimitDescriptor{
+					RateLimitPolicy: &sesame_api_v1.RateLimitPolicy{
+						Global: &sesame_api_v1.GlobalRateLimitPolicy{
+							Descriptors: []sesame_api_v1.RateLimitDescriptor{
 								// first descriptor
 								{
-									Entries: []Sesame_api_v1.RateLimitDescriptorEntry{
+									Entries: []sesame_api_v1.RateLimitDescriptorEntry{
 										{
-											RemoteAddress: &Sesame_api_v1.RemoteAddressDescriptor{},
+											RemoteAddress: &sesame_api_v1.RemoteAddressDescriptor{},
 										},
 										{
-											GenericKey: &Sesame_api_v1.GenericKeyDescriptor{Value: "generic-key-value"},
+											GenericKey: &sesame_api_v1.GenericKeyDescriptor{Value: "generic-key-value"},
 										},
 									},
 								},
 								// second descriptor
 								{
-									Entries: []Sesame_api_v1.RateLimitDescriptorEntry{
+									Entries: []sesame_api_v1.RateLimitDescriptorEntry{
 										{
-											RequestHeader: &Sesame_api_v1.RequestHeaderDescriptor{HeaderName: "X-Sesame", DescriptorKey: "header-descriptor"},
+											RequestHeader: &sesame_api_v1.RequestHeaderDescriptor{HeaderName: "X-Sesame", DescriptorKey: "header-descriptor"},
 										},
 										{
-											GenericKey: &Sesame_api_v1.GenericKeyDescriptor{Key: "generic-key-key", Value: "generic-key-value-2"},
+											GenericKey: &sesame_api_v1.GenericKeyDescriptor{Key: "generic-key-key", Value: "generic-key-value-2"},
 										},
 									},
 								},

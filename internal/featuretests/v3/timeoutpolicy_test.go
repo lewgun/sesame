@@ -19,11 +19,11 @@ import (
 
 	envoy_route_v3 "github.com/envoyproxy/go-control-plane/envoy/config/route/v3"
 	envoy_discovery_v3 "github.com/envoyproxy/go-control-plane/envoy/service/discovery/v3"
-	Sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
-	"github.com/projectsesame/sesame/internal/Sesame"
+	sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
 	envoy_v3 "github.com/projectsesame/sesame/internal/envoy/v3"
 	"github.com/projectsesame/sesame/internal/featuretests"
 	"github.com/projectsesame/sesame/internal/fixture"
+	"github.com/projectsesame/sesame/internal/sesame"
 	v1 "k8s.io/api/core/v1"
 	networking_v1 "k8s.io/api/networking/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -31,7 +31,7 @@ import (
 )
 
 func TestTimeoutPolicyRequestTimeout(t *testing.T) {
-	rh, c, done := setup(t, func(reh *Sesame.EventHandler) {})
+	rh, c, done := setup(t, func(reh *sesame.EventHandler) {})
 	defer done()
 
 	svc := fixture.NewService("kuard").
@@ -150,19 +150,19 @@ func TestTimeoutPolicyRequestTimeout(t *testing.T) {
 	})
 	rh.OnDelete(i4)
 
-	p1 := &Sesame_api_v1.HTTPProxy{
+	p1 := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "simple",
 			Namespace: svc.Namespace,
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{Fqdn: "test2.test.com"},
-			Routes: []Sesame_api_v1.Route{{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{Fqdn: "test2.test.com"},
+			Routes: []sesame_api_v1.Route{{
 				Conditions: matchconditions(prefixMatchCondition("/")),
-				TimeoutPolicy: &Sesame_api_v1.TimeoutPolicy{
+				TimeoutPolicy: &sesame_api_v1.TimeoutPolicy{
 					Response: "600", // not 600s
 				},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: svc.Name,
 					Port: 8080,
 				}},
@@ -179,16 +179,16 @@ func TestTimeoutPolicyRequestTimeout(t *testing.T) {
 		TypeUrl: routeType,
 	})
 
-	p2 := &Sesame_api_v1.HTTPProxy{
+	p2 := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: p1.ObjectMeta,
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{Fqdn: "test2.test.com"},
-			Routes: []Sesame_api_v1.Route{{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{Fqdn: "test2.test.com"},
+			Routes: []sesame_api_v1.Route{{
 				Conditions: matchconditions(prefixMatchCondition("/")),
-				TimeoutPolicy: &Sesame_api_v1.TimeoutPolicy{
+				TimeoutPolicy: &sesame_api_v1.TimeoutPolicy{
 					Response: "3m",
 				},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: svc.Name,
 					Port: 8080,
 				}},
@@ -212,16 +212,16 @@ func TestTimeoutPolicyRequestTimeout(t *testing.T) {
 		TypeUrl: routeType,
 	})
 
-	p3 := &Sesame_api_v1.HTTPProxy{
+	p3 := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: p2.ObjectMeta,
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{Fqdn: "test2.test.com"},
-			Routes: []Sesame_api_v1.Route{{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{Fqdn: "test2.test.com"},
+			Routes: []sesame_api_v1.Route{{
 				Conditions: matchconditions(prefixMatchCondition("/")),
-				TimeoutPolicy: &Sesame_api_v1.TimeoutPolicy{
+				TimeoutPolicy: &sesame_api_v1.TimeoutPolicy{
 					Response: "infinity",
 				},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: svc.Name,
 					Port: 8080,
 				}},
@@ -247,26 +247,26 @@ func TestTimeoutPolicyRequestTimeout(t *testing.T) {
 }
 
 func TestTimeoutPolicyIdleTimeout(t *testing.T) {
-	rh, c, done := setup(t, func(reh *Sesame.EventHandler) {})
+	rh, c, done := setup(t, func(reh *sesame.EventHandler) {})
 	defer done()
 
 	svc := fixture.NewService("kuard").
 		WithPorts(v1.ServicePort{Port: 8080, TargetPort: intstr.FromInt(8080)})
 	rh.OnAdd(svc)
 
-	p1 := &Sesame_api_v1.HTTPProxy{
+	p1 := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "simple",
 			Namespace: svc.Namespace,
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{Fqdn: "test2.test.com"},
-			Routes: []Sesame_api_v1.Route{{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{Fqdn: "test2.test.com"},
+			Routes: []sesame_api_v1.Route{{
 				Conditions: matchconditions(prefixMatchCondition("/")),
-				TimeoutPolicy: &Sesame_api_v1.TimeoutPolicy{
+				TimeoutPolicy: &sesame_api_v1.TimeoutPolicy{
 					Idle: "600", // not 600s
 				},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: svc.Name,
 					Port: 8080,
 				}},
@@ -283,16 +283,16 @@ func TestTimeoutPolicyIdleTimeout(t *testing.T) {
 		TypeUrl: routeType,
 	})
 
-	p2 := &Sesame_api_v1.HTTPProxy{
+	p2 := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: p1.ObjectMeta,
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{Fqdn: "test2.test.com"},
-			Routes: []Sesame_api_v1.Route{{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{Fqdn: "test2.test.com"},
+			Routes: []sesame_api_v1.Route{{
 				Conditions: matchconditions(prefixMatchCondition("/")),
-				TimeoutPolicy: &Sesame_api_v1.TimeoutPolicy{
+				TimeoutPolicy: &sesame_api_v1.TimeoutPolicy{
 					Idle: "3m",
 				},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: svc.Name,
 					Port: 8080,
 				}},
@@ -316,16 +316,16 @@ func TestTimeoutPolicyIdleTimeout(t *testing.T) {
 		TypeUrl: routeType,
 	})
 
-	p3 := &Sesame_api_v1.HTTPProxy{
+	p3 := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: p2.ObjectMeta,
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{Fqdn: "test2.test.com"},
-			Routes: []Sesame_api_v1.Route{{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{Fqdn: "test2.test.com"},
+			Routes: []sesame_api_v1.Route{{
 				Conditions: matchconditions(prefixMatchCondition("/")),
-				TimeoutPolicy: &Sesame_api_v1.TimeoutPolicy{
+				TimeoutPolicy: &sesame_api_v1.TimeoutPolicy{
 					Idle: "infinity",
 				},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: svc.Name,
 					Port: 8080,
 				}},

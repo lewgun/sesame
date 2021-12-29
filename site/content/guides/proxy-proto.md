@@ -44,7 +44,7 @@ spec:
 ...
 spec:
   containers:
-  - image: ghcr.io/projectsesame/Sesame:{{< param latest_version >}}
+  - image: ghcr.io/projectsesame/sesame:{{< param latest_version >}}
     imagePullPolicy: Always
     name: Sesame
     command: ["Sesame"]

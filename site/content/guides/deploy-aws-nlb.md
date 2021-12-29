@@ -20,10 +20,10 @@ This configuration has several advantages:
 ## Deploying Sesame
 
 1. [Clone the Sesame repository][4] and cd into the repo 
-2. Edit the Envoy service (`02-service-envoy.yaml`) in the `examples/Sesame` directory:
+2. Edit the Envoy service (`02-service-envoy.yaml`) in the `examples/sesame` directory:
     - Remove the existing annotation: `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp`
     - Add the following annotation: `service.beta.kubernetes.io/aws-load-balancer-type: nlb`
-3. Run `kubectl apply -f examples/Sesame`
+3. Run `kubectl apply -f examples/sesame`
 
 This creates the `projectsesame` Namespace along with a ServiceAccount, RBAC rules, Sesame Deployment and an Envoy DaemonSet. 
 It also creates the NLB based loadbalancer for you.

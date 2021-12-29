@@ -29,7 +29,7 @@ Example:
 Starts pushing container images to GHCR in addition to Docker Hub.
 Images will be pushed to both registries for a period of time, until the Docker Hub push is removed.
 
-Going forward, the examples & quickstart will utilize the GHCR registry with images like: `ghcr.io/projectsesame/Sesame`.
+Going forward, the examples & quickstart will utilize the GHCR registry with images like: `ghcr.io/projectsesame/sesame`.
 
 ## Run Envoy as non-root (#4084)
 

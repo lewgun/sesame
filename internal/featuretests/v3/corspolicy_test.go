@@ -20,7 +20,7 @@ import (
 	envoy_discovery_v3 "github.com/envoyproxy/go-control-plane/envoy/service/discovery/v3"
 	matcher "github.com/envoyproxy/go-control-plane/envoy/type/matcher/v3"
 	"github.com/golang/protobuf/ptypes/wrappers"
-	Sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
+	sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
 	envoy_v3 "github.com/projectsesame/sesame/internal/envoy/v3"
 	"github.com/projectsesame/sesame/internal/fixture"
 	v1 "k8s.io/api/core/v1"
@@ -37,14 +37,14 @@ func TestCorsPolicy(t *testing.T) {
 
 	// Allow origin
 	rh.OnAdd(fixture.NewProxy("simple").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "hello.world",
-				CORSPolicy: &Sesame_api_v1.CORSPolicy{
+				CORSPolicy: &sesame_api_v1.CORSPolicy{
 					AllowOrigin: []string{"*"},
 				},
-			}, Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+			}, Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: "svc1",
 					Port: 80,
 				}},
@@ -76,15 +76,15 @@ func TestCorsPolicy(t *testing.T) {
 
 	// Allow credentials
 	rh.OnAdd(fixture.NewProxy("simple").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "hello.world",
-				CORSPolicy: &Sesame_api_v1.CORSPolicy{
+				CORSPolicy: &sesame_api_v1.CORSPolicy{
 					AllowOrigin:      []string{"*"},
 					AllowCredentials: true,
 				},
-			}, Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+			}, Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: "svc1",
 					Port: 80,
 				}},
@@ -116,16 +116,16 @@ func TestCorsPolicy(t *testing.T) {
 
 	// Allow methods
 	rh.OnAdd(fixture.NewProxy("simple").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "hello.world",
-				CORSPolicy: &Sesame_api_v1.CORSPolicy{
+				CORSPolicy: &sesame_api_v1.CORSPolicy{
 					AllowOrigin:      []string{"*"},
 					AllowCredentials: true,
-					AllowMethods:     []Sesame_api_v1.CORSHeaderValue{"GET", "POST", "OPTIONS"},
+					AllowMethods:     []sesame_api_v1.CORSHeaderValue{"GET", "POST", "OPTIONS"},
 				},
-			}, Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+			}, Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: "svc1",
 					Port: 80,
 				}},
@@ -158,16 +158,16 @@ func TestCorsPolicy(t *testing.T) {
 
 	// Allow headers
 	rh.OnAdd(fixture.NewProxy("simple").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "hello.world",
-				CORSPolicy: &Sesame_api_v1.CORSPolicy{
+				CORSPolicy: &sesame_api_v1.CORSPolicy{
 					AllowOrigin:      []string{"*"},
 					AllowCredentials: true,
-					AllowHeaders:     []Sesame_api_v1.CORSHeaderValue{"custom-header-1", "custom-header-2"},
+					AllowHeaders:     []sesame_api_v1.CORSHeaderValue{"custom-header-1", "custom-header-2"},
 				},
-			}, Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+			}, Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: "svc1",
 					Port: 80,
 				}},
@@ -200,16 +200,16 @@ func TestCorsPolicy(t *testing.T) {
 
 	// Expose headers
 	rh.OnAdd(fixture.NewProxy("simple").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "hello.world",
-				CORSPolicy: &Sesame_api_v1.CORSPolicy{
+				CORSPolicy: &sesame_api_v1.CORSPolicy{
 					AllowOrigin:      []string{"*"},
 					AllowCredentials: true,
-					ExposeHeaders:    []Sesame_api_v1.CORSHeaderValue{"custom-header-1", "custom-header-2"},
+					ExposeHeaders:    []sesame_api_v1.CORSHeaderValue{"custom-header-1", "custom-header-2"},
 				},
-			}, Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+			}, Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: "svc1",
 					Port: 80,
 				}},
@@ -243,16 +243,16 @@ func TestCorsPolicy(t *testing.T) {
 
 	// Max Age
 	rh.OnAdd(fixture.NewProxy("simple").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "hello.world",
-				CORSPolicy: &Sesame_api_v1.CORSPolicy{
+				CORSPolicy: &sesame_api_v1.CORSPolicy{
 					AllowOrigin:      []string{"*"},
 					AllowCredentials: true,
 					MaxAge:           "10m",
 				},
-			}, Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+			}, Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: "svc1",
 					Port: 80,
 				}},
@@ -285,16 +285,16 @@ func TestCorsPolicy(t *testing.T) {
 
 	// Disable preflight request caching
 	rh.OnAdd(fixture.NewProxy("simple").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "hello.world",
-				CORSPolicy: &Sesame_api_v1.CORSPolicy{
+				CORSPolicy: &sesame_api_v1.CORSPolicy{
 					AllowOrigin:      []string{"*"},
 					AllowCredentials: true,
 					MaxAge:           "0s",
 				},
-			}, Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+			}, Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: "svc1",
 					Port: 80,
 				}},
@@ -326,18 +326,18 @@ func TestCorsPolicy(t *testing.T) {
 	})
 
 	// Virtual hosts with an invalid max age in their policy are not added
-	invvhost := &Sesame_api_v1.HTTPProxy{
+	invvhost := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: fixture.ObjectMeta("simple"),
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "hello.world",
-				CORSPolicy: &Sesame_api_v1.CORSPolicy{
+				CORSPolicy: &sesame_api_v1.CORSPolicy{
 					AllowOrigin:      []string{"*"},
 					AllowCredentials: true,
 					MaxAge:           "-10m",
 				},
-			}, Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+			}, Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: "svc1",
 					Port: 80,
 				}},

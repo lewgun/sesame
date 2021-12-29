@@ -57,18 +57,18 @@ type Meta struct {
 }
 
 const (
-	BuildInfoGauge = "Sesame_build_info"
+	BuildInfoGauge = "sesame_build_info"
 
-	HTTPProxyTotalGauge     = "Sesame_httpproxy"
-	HTTPProxyRootTotalGauge = "Sesame_httpproxy_root"
-	HTTPProxyInvalidGauge   = "Sesame_httpproxy_invalid"
-	HTTPProxyValidGauge     = "Sesame_httpproxy_valid"
-	HTTPProxyOrphanedGauge  = "Sesame_httpproxy_orphaned"
+	HTTPProxyTotalGauge     = "sesame_httpproxy"
+	HTTPProxyRootTotalGauge = "sesame_httpproxy_root"
+	HTTPProxyInvalidGauge   = "sesame_httpproxy_invalid"
+	HTTPProxyValidGauge     = "sesame_httpproxy_valid"
+	HTTPProxyOrphanedGauge  = "sesame_httpproxy_orphaned"
 
-	DAGRebuildGauge             = "Sesame_dagrebuild_timestamp"
-	DAGRebuildTotal             = "Sesame_dagrebuild_total"
-	cacheHandlerOnUpdateSummary = "Sesame_cachehandler_onupdate_duration_seconds"
-	eventHandlerOperations      = "Sesame_eventhandler_operation_total"
+	DAGRebuildGauge             = "sesame_dagrebuild_timestamp"
+	DAGRebuildTotal             = "sesame_dagrebuild_total"
+	cacheHandlerOnUpdateSummary = "sesame_cachehandler_onupdate_duration_seconds"
+	eventHandlerOperations      = "sesame_eventhandler_operation_total"
 )
 
 // NewMetrics creates a new set of metrics and registers them with

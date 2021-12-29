@@ -60,7 +60,7 @@ spec:
         imagePullPolicy: IfNotPresent
         name: envoy
         env:
-        - name: Sesame_NAMESPACE
+        - name: SESAME_NAMESPACE
           valueFrom:
             fieldRef:
               apiVersion: v1
@@ -123,7 +123,7 @@ spec:
           mountPath: /certs
           readOnly: true
         env:
-        - name: Sesame_NAMESPACE
+        - name: SESAME_NAMESPACE
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace

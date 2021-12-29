@@ -18,10 +18,10 @@ import (
 	"time"
 
 	envoy_discovery_v3 "github.com/envoyproxy/go-control-plane/envoy/service/discovery/v3"
-	Sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
-	"github.com/projectsesame/sesame/internal/Sesameconfig"
+	sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
 	envoy_v3 "github.com/projectsesame/sesame/internal/envoy/v3"
 	"github.com/projectsesame/sesame/internal/fixture"
+	"github.com/projectsesame/sesame/internal/sesameconfig"
 	"github.com/projectsesame/sesame/internal/timeout"
 	xdscache_v3 "github.com/projectsesame/sesame/internal/xdscache/v3"
 	v1 "k8s.io/api/core/v1"
@@ -37,18 +37,18 @@ func TestTimeoutsNotSpecified(t *testing.T) {
 		WithPorts(v1.ServicePort{Name: "http", Port: 80})
 	rh.OnAdd(s1)
 
-	hp1 := &Sesame_api_v1.HTTPProxy{
+	hp1 := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "simple",
 			Namespace: s1.Namespace,
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "example.com",
 			},
-			Routes: []Sesame_api_v1.Route{{
+			Routes: []sesame_api_v1.Route{{
 				Conditions: matchconditions(prefixMatchCondition("/")),
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: s1.Name,
 					Port: 80,
 				}},
@@ -77,7 +77,7 @@ func TestTimeoutsNotSpecified(t *testing.T) {
 
 func TestNonZeroTimeoutsSpecified(t *testing.T) {
 	withTimeouts := func(conf *xdscache_v3.ListenerConfig) {
-		conf.Timeouts = Sesameconfig.Timeouts{
+		conf.Timeouts = sesameconfig.Timeouts{
 			ConnectionIdle:                timeout.DurationSetting(7 * time.Second),
 			StreamIdle:                    timeout.DurationSetting(70 * time.Second),
 			MaxConnectionDuration:         timeout.DurationSetting(700 * time.Second),
@@ -92,18 +92,18 @@ func TestNonZeroTimeoutsSpecified(t *testing.T) {
 		WithPorts(v1.ServicePort{Name: "http", Port: 80})
 	rh.OnAdd(s1)
 
-	hp1 := &Sesame_api_v1.HTTPProxy{
+	hp1 := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "simple",
 			Namespace: s1.Namespace,
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "example.com",
 			},
-			Routes: []Sesame_api_v1.Route{{
+			Routes: []sesame_api_v1.Route{{
 				Conditions: matchconditions(prefixMatchCondition("/")),
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: s1.Name,
 					Port: 80,
 				}},

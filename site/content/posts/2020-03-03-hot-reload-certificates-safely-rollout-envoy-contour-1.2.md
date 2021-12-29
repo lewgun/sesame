@@ -35,7 +35,7 @@ Sesame implements a new envoy sub-command which has a shutdown-manager whose job
 
 The Envoy container also has some configuration to implement the shutdown manager. First the preStop hook is configured to use the /shutdown endpoint which blocks the container from exiting. Finally, the pod’s `terminationGracePeriodSeconds` is customized to extend the time in which Kubernetes will allow the pod to be in the Terminating state. The termination grace period defines an upper bound for long-lived sessions. If during shutdown, the connections aren’t drained to the configured amount, the terminationGracePeriodSeconds will send a SIGTERM to the pod killing it.
 
-![Envoy Shutdown Manager](/img/posts/Sesame-1.2/envoy-shutdown-manager.png){: .center-image }
+![Envoy Shutdown Manager](/img/posts/sesame-1.2/envoy-shutdown-manager.png){: .center-image }
 
 {% youtube oO52CV-EAkw %}{: .center-image }
 

@@ -18,7 +18,7 @@ import (
 
 	envoy_cluster_v3 "github.com/envoyproxy/go-control-plane/envoy/config/cluster/v3"
 	envoy_discovery_v3 "github.com/envoyproxy/go-control-plane/envoy/service/discovery/v3"
-	Sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
+	sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
 	envoy_v3 "github.com/projectsesame/sesame/internal/envoy/v3"
 	"github.com/projectsesame/sesame/internal/featuretests"
 	"github.com/projectsesame/sesame/internal/fixture"
@@ -471,27 +471,27 @@ func TestClusterPerServiceParameters(t *testing.T) {
 		WithPorts(v1.ServicePort{Port: 80, TargetPort: intstr.FromString("8080")}),
 	)
 
-	rh.OnAdd(&Sesame_api_v1.HTTPProxy{
+	rh.OnAdd(&sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "simple",
 			Namespace: "default",
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{Fqdn: "www.example.com"},
-			Routes: []Sesame_api_v1.Route{{
-				Conditions: []Sesame_api_v1.MatchCondition{{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{Fqdn: "www.example.com"},
+			Routes: []sesame_api_v1.Route{{
+				Conditions: []sesame_api_v1.MatchCondition{{
 					Prefix: "/a",
 				}},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name:   "kuard",
 					Port:   80,
 					Weight: 90,
 				}},
 			}, {
-				Conditions: []Sesame_api_v1.MatchCondition{{
+				Conditions: []sesame_api_v1.MatchCondition{{
 					Prefix: "/a",
 				}},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name:   "kuard",
 					Port:   80,
 					Weight: 60,
@@ -519,32 +519,32 @@ func TestClusterLoadBalancerStrategyPerRoute(t *testing.T) {
 		WithPorts(v1.ServicePort{Port: 80, TargetPort: intstr.FromString("8080")}),
 	)
 
-	rh.OnAdd(&Sesame_api_v1.HTTPProxy{
+	rh.OnAdd(&sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "simple",
 			Namespace: "default",
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{Fqdn: "www.example.com"},
-			Routes: []Sesame_api_v1.Route{{
-				Conditions: []Sesame_api_v1.MatchCondition{{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{Fqdn: "www.example.com"},
+			Routes: []sesame_api_v1.Route{{
+				Conditions: []sesame_api_v1.MatchCondition{{
 					Prefix: "/a",
 				}},
-				LoadBalancerPolicy: &Sesame_api_v1.LoadBalancerPolicy{
+				LoadBalancerPolicy: &sesame_api_v1.LoadBalancerPolicy{
 					Strategy: "Random",
 				},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: "kuard",
 					Port: 80,
 				}},
 			}, {
-				Conditions: []Sesame_api_v1.MatchCondition{{
+				Conditions: []sesame_api_v1.MatchCondition{{
 					Prefix: "/b",
 				}},
-				LoadBalancerPolicy: &Sesame_api_v1.LoadBalancerPolicy{
+				LoadBalancerPolicy: &sesame_api_v1.LoadBalancerPolicy{
 					Strategy: "WeightedLeastRequest",
 				},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: "kuard",
 					Port: 80,
 				}},
@@ -587,21 +587,21 @@ func TestClusterWithHealthChecks(t *testing.T) {
 		WithPorts(v1.ServicePort{Port: 80, TargetPort: intstr.FromString("8080")}),
 	)
 
-	rh.OnAdd(&Sesame_api_v1.HTTPProxy{
+	rh.OnAdd(&sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "simple",
 			Namespace: "default",
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{Fqdn: "www.example.com"},
-			Routes: []Sesame_api_v1.Route{{
-				Conditions: []Sesame_api_v1.MatchCondition{{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{Fqdn: "www.example.com"},
+			Routes: []sesame_api_v1.Route{{
+				Conditions: []sesame_api_v1.MatchCondition{{
 					Prefix: "/a",
 				}},
-				HealthCheckPolicy: &Sesame_api_v1.HTTPHealthCheckPolicy{
+				HealthCheckPolicy: &sesame_api_v1.HTTPHealthCheckPolicy{
 					Path: "/healthz",
 				},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name:   "kuard",
 					Port:   80,
 					Weight: 90,
@@ -627,27 +627,27 @@ func TestUnreferencedService(t *testing.T) {
 		WithPorts(v1.ServicePort{Port: 80, TargetPort: intstr.FromString("8080")}),
 	)
 
-	rh.OnAdd(&Sesame_api_v1.HTTPProxy{
+	rh.OnAdd(&sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "simple",
 			Namespace: "default",
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{Fqdn: "www.example.com"},
-			Routes: []Sesame_api_v1.Route{{
-				Conditions: []Sesame_api_v1.MatchCondition{{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{Fqdn: "www.example.com"},
+			Routes: []sesame_api_v1.Route{{
+				Conditions: []sesame_api_v1.MatchCondition{{
 					Prefix: "/a",
 				}},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name:   "kuard",
 					Port:   80,
 					Weight: 90,
 				}},
 			}, {
-				Conditions: []Sesame_api_v1.MatchCondition{{
+				Conditions: []sesame_api_v1.MatchCondition{{
 					Prefix: "/b",
 				}},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name:   "kuard",
 					Port:   80,
 					Weight: 60,

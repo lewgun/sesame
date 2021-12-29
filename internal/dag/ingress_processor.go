@@ -203,10 +203,10 @@ func (p *IngressProcessor) route(ingress *networking_v1.Ingress, host string, pa
 	})
 
 	dynamicHeaders := map[string]string{
-		"Sesame_NAMESPACE": ingress.Namespace,
+		"SESAME_NAMESPACE": ingress.Namespace,
 	}
-	dynamicHeaders["Sesame_SERVICE_NAME"] = serviceName
-	dynamicHeaders["Sesame_SERVICE_PORT"] = strconv.Itoa(int(servicePort))
+	dynamicHeaders["SESAME_SERVICE_NAME"] = serviceName
+	dynamicHeaders["SESAME_SERVICE_PORT"] = strconv.Itoa(int(servicePort))
 
 	// Get default headersPolicies
 	reqHP, err := headersPolicyService(p.RequestHeadersPolicy, nil, dynamicHeaders)

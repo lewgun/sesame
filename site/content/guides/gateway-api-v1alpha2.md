@@ -46,7 +46,7 @@ Refer to the [Sesame][6] design for additional background on the Gateway API imp
 
 Deploy Sesame:
 ```shell
-$ kubectl apply -f https://raw.githubusercontent.com/projectsesame/Sesame/v1.20.0-beta.1/examples/render/Sesame-gateway.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/projectsesame/sesame/v1.20.0-beta.1/examples/render/sesame-gateway.yaml
 ```
 This command creates:
 
@@ -102,7 +102,7 @@ See the next section ([Testing the Gateway API](#testing-the-gateway-api)) on ho
 
 Run the test application:
 ```shell
-$ kubectl apply -f https://raw.githubusercontent.com/projectsesame/Sesame/v1.20.0-beta.1/examples/gateway/kuard/kuard.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/projectsesame/sesame/v1.20.0-beta.1/examples/gateway/kuard/kuard.yaml
 ```
 This command creates:
 

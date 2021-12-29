@@ -10,7 +10,7 @@ As an additional mitigation for [CVE-2021-32783](https://github.com/projectsesam
 
 If you have been using the Sesame example YAMLs to deploy Sesame and Envoy, no changes are required except to deploy the updated YAMLs for release 1.18.1.
 
-If you are managing your Envoy DaemonSet using another method, be sure to inspect the [updated YAML for required changes](https://github.com/projectsesame/sesame/blob/v1.18.1/examples/Sesame/03-envoy.yaml). An [additional volume](https://github.com/projectsesame/sesame/blob/v1.18.1/examples/Sesame/03-envoy.yaml#L134-L135) is required and it must be mounted in the [`shutdown-manager`](https://github.com/projectsesame/sesame/blob/v1.18.1/examples/Sesame/03-envoy.yaml#L48-L50) and [`envoy`](https://github.com/projectsesame/sesame/blob/v1.18.1/examples/Sesame/03-envoy.yaml#L95-L96) containers to ensure both have access to the Unix domain socket Envoy is now configured to listen on.
+If you are managing your Envoy DaemonSet using another method, be sure to inspect the [updated YAML for required changes](https://github.com/projectsesame/sesame/blob/v1.18.1/examples/sesame/03-envoy.yaml). An [additional volume](https://github.com/projectsesame/sesame/blob/v1.18.1/examples/sesame/03-envoy.yaml#L134-L135) is required and it must be mounted in the [`shutdown-manager`](https://github.com/projectsesame/sesame/blob/v1.18.1/examples/sesame/03-envoy.yaml#L48-L50) and [`envoy`](https://github.com/projectsesame/sesame/blob/v1.18.1/examples/sesame/03-envoy.yaml#L95-L96) containers to ensure both have access to the Unix domain socket Envoy is now configured to listen on.
 
 ## Envoy Updated to 1.19.1
 

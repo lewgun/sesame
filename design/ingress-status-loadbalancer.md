@@ -67,7 +67,7 @@ Initially this feels wrong but consider the scenarios:
 
 ## Detailed Design
 
-I think the design should involve two goroutines added to cmd/Sesame's workgroup.
+I think the design should involve two goroutines added to cmd/sesame's workgroup.
 The first will be responsible for load balancer discovery, the second will be responsible for updating status documents.
 
 ### Discovery worker

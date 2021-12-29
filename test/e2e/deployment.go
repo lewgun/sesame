@@ -635,7 +635,7 @@ func (d *Deployment) StopLocalSesame(SesameCmd *gexec.Session, configFile string
 
 	// Look for the ENV variable to tell if this test run should use
 	// the SesameConfiguration file or the SesameConfiguration CRD.
-	if useSesameConfiguration, variableFound := os.LookupEnv("USE_Sesame_CONFIGURATION_CRD"); variableFound && useSesameConfiguration == "true" {
+	if useSesameConfiguration, variableFound := os.LookupEnv("USE_SESAME_CONFIGURATION_CRD"); variableFound && useSesameConfiguration == "true" {
 		cc := &sesame_api_v1alpha1.SesameConfiguration{
 			ObjectMeta: metav1.ObjectMeta{
 				Name:      configFile,

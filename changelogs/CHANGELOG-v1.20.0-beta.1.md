@@ -204,12 +204,12 @@ The simplest way to install v1.20.0-beta.1 is to apply one of the example config
 
 With Gateway API:
 ```bash
-kubectl apply -f https://github.com/projectsesame/sesame/blob/v1.20.0-beta.1/examples/render/Sesame-gateway.yaml
+kubectl apply -f https://github.com/projectsesame/sesame/blob/v1.20.0-beta.1/examples/render/sesame-gateway.yaml
 ```
 
 Without Gateway API:
 ```bash
-kubectl apply -f https://github.com/projectsesame/sesame/blob/v1.20.0-beta.1/examples/render/Sesame.yaml
+kubectl apply -f https://github.com/projectsesame/sesame/blob/v1.20.0-beta.1/examples/render/sesame.yaml
 ```
 
 ## Compatible Kubernetes Versions

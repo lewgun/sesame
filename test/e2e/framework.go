@@ -85,7 +85,7 @@ func NewFramework(inClusterTestSuite bool) *Framework {
 	t := ginkgo.GinkgoT()
 
 	// Deferring GinkgoRecover() provides better error messages in case of panic
-	// e.g. when Sesame_E2E_LOCAL_HOST environment variable is not set.
+	// e.g. when SESAME_E2E_LOCAL_HOST environment variable is not set.
 	defer ginkgo.GinkgoRecover()
 
 	scheme := runtime.NewScheme()
@@ -121,22 +121,22 @@ func NewFramework(inClusterTestSuite bool) *Framework {
 	crClient, err := client.New(config, client.Options{Scheme: scheme})
 	require.NoError(t, err)
 
-	httpURLBase := os.Getenv("Sesame_E2E_HTTP_URL_BASE")
+	httpURLBase := os.Getenv("SESAME_E2E_HTTP_URL_BASE")
 	if httpURLBase == "" {
 		httpURLBase = "http://127.0.0.1:9080"
 	}
 
-	httpsURLBase := os.Getenv("Sesame_E2E_HTTPS_URL_BASE")
+	httpsURLBase := os.Getenv("SESAME_E2E_HTTPS_URL_BASE")
 	if httpsURLBase == "" {
 		httpsURLBase = "https://127.0.0.1:9443"
 	}
 
-	httpURLMetricsBase := os.Getenv("Sesame_E2E_HTTP_URL_METRICS_BASE")
+	httpURLMetricsBase := os.Getenv("SESAME_E2E_HTTP_URL_METRICS_BASE")
 	if httpURLMetricsBase == "" {
 		httpURLMetricsBase = "http://127.0.0.1:8002"
 	}
 
-	httpURLAdminBase := os.Getenv("Sesame_E2E_HTTP_URL_ADMIN_BASE")
+	httpURLAdminBase := os.Getenv("SESAME_E2E_HTTP_URL_ADMIN_BASE")
 	if httpURLAdminBase == "" {
 		httpURLAdminBase = "http://127.0.0.1:19001"
 	}
@@ -150,7 +150,7 @@ func NewFramework(inClusterTestSuite bool) *Framework {
 	)
 	if inClusterTestSuite {
 		var found bool
-		if SesameImage, found = os.LookupEnv("Sesame_E2E_IMAGE"); !found {
+		if SesameImage, found = os.LookupEnv("SESAME_E2E_IMAGE"); !found {
 			SesameImage = "ghcr.io/projectsesame/sesame:main"
 		}
 	} else {
@@ -159,10 +159,10 @@ func NewFramework(inClusterTestSuite bool) *Framework {
 			kubeConfig = filepath.Join(os.Getenv("HOME"), ".kube", "config")
 		}
 
-		SesameHost = os.Getenv("Sesame_E2E_LOCAL_HOST")
-		require.NotEmpty(t, SesameHost, "Sesame_E2E_LOCAL_HOST environment variable not supplied")
+		SesameHost = os.Getenv("SESAME_E2E_LOCAL_HOST")
+		require.NotEmpty(t, SesameHost, "SESAME_E2E_LOCAL_HOST environment variable not supplied")
 
-		if SesamePort, found = os.LookupEnv("Sesame_E2E_LOCAL_PORT"); !found {
+		if SesamePort, found = os.LookupEnv("SESAME_E2E_LOCAL_PORT"); !found {
 			SesamePort = "8001"
 		}
 
@@ -454,7 +454,7 @@ type EchoResponseBody struct {
 }
 
 func UsingSesameConfigCRD() bool {
-	useSesameConfiguration, found := os.LookupEnv("USE_Sesame_CONFIGURATION_CRD")
+	useSesameConfiguration, found := os.LookupEnv("USE_SESAME_CONFIGURATION_CRD")
 	return found && useSesameConfiguration == "true"
 }
 

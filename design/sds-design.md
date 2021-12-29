@@ -33,7 +33,7 @@ Create new resource SDS of `Cache` Interface type which implements the SDS v2 gR
 Create new xdsHandler of secret type. Register & Implement FetchSecrets() & StreamSecrets().
 
 ### Create SecretCache to be used by Sesame Internally
-In /internal/Sesame create secret.go with SecretCache struct
+In /internal/sesame create secret.go with SecretCache struct
 Implement Register(), Update() and notify()
 Create secretVisitor and implement visit() and visitSecrets() to produce a map with v2.secrets
 
@@ -43,7 +43,7 @@ In order to facilitate debugging and to find out exactly the data that is being 
 will add support to Sesame cli sub command. This cmd shd be used stream changes to the SDS api endpoint
 to the terminal.
 
-`kubectl -n projectsesame exec $Sesame_POD -c Sesame Sesame cli sds`
+`kubectl -n projectsesame exec $SESAME_POD -c Sesame Sesame cli sds`
 
 
 [0]: https://github.com/projectsesame/sesame/issues/898

@@ -22,7 +22,7 @@ import (
 	envoy_v3_tls "github.com/envoyproxy/go-control-plane/envoy/extensions/transport_sockets/tls/v3"
 	envoy_discovery_v3 "github.com/envoyproxy/go-control-plane/envoy/service/discovery/v3"
 	matcher "github.com/envoyproxy/go-control-plane/envoy/type/matcher/v3"
-	Sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
+	sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
 	"github.com/projectsesame/sesame/apis/projectsesame/v1alpha1"
 	"github.com/projectsesame/sesame/internal/dag"
 	envoy_v3 "github.com/projectsesame/sesame/internal/envoy/v3"
@@ -104,7 +104,7 @@ func extUpstreamValidation(t *testing.T, rh cache.ResourceEventHandler, c *Sesam
 			Services: []v1alpha1.ExtensionServiceTarget{
 				{Name: "svc1", Port: 8081},
 			},
-			UpstreamValidation: &Sesame_api_v1.UpstreamValidation{
+			UpstreamValidation: &sesame_api_v1.UpstreamValidation{
 				CACertificate: "cacert",
 				SubjectName:   "ext.projectsesame.io",
 			},
@@ -154,7 +154,7 @@ func extUpstreamValidation(t *testing.T, rh cache.ResourceEventHandler, c *Sesam
 			Services: []v1alpha1.ExtensionServiceTarget{
 				{Name: "svc1", Port: 8081},
 			},
-			UpstreamValidation: &Sesame_api_v1.UpstreamValidation{
+			UpstreamValidation: &sesame_api_v1.UpstreamValidation{
 				CACertificate: "missing",
 				SubjectName:   "ext.projectsesame.io",
 			},
@@ -181,7 +181,7 @@ func extUpstreamValidation(t *testing.T, rh cache.ResourceEventHandler, c *Sesam
 			Services: []v1alpha1.ExtensionServiceTarget{
 				{Name: "svc1", Port: 8081},
 			},
-			UpstreamValidation: &Sesame_api_v1.UpstreamValidation{
+			UpstreamValidation: &sesame_api_v1.UpstreamValidation{
 				CACertificate: "otherNs/cacert",
 				SubjectName:   "ext.projectsesame.io",
 			},
@@ -194,10 +194,10 @@ func extUpstreamValidation(t *testing.T, rh cache.ResourceEventHandler, c *Sesam
 	})
 
 	// Delegate the CACertificate secret to be used in the ExtensionService's namespace
-	rh.OnAdd(&Sesame_api_v1.TLSCertificateDelegation{
+	rh.OnAdd(&sesame_api_v1.TLSCertificateDelegation{
 		ObjectMeta: fixture.ObjectMeta("otherNs/delegate-cacert"),
-		Spec: Sesame_api_v1.TLSCertificateDelegationSpec{
-			Delegations: []Sesame_api_v1.CertificateDelegation{{
+		Spec: sesame_api_v1.TLSCertificateDelegationSpec{
+			Delegations: []sesame_api_v1.CertificateDelegation{{
 				SecretName:       "cacert",
 				TargetNamespaces: []string{"*"},
 			}},
@@ -266,7 +266,7 @@ func extInvalidTimeout(_ *testing.T, rh cache.ResourceEventHandler, c *Sesame) {
 				{Name: "svc1", Port: 8081},
 				{Name: "svc2", Port: 8082},
 			},
-			TimeoutPolicy: &Sesame_api_v1.TimeoutPolicy{
+			TimeoutPolicy: &sesame_api_v1.TimeoutPolicy{
 				Response: "invalid",
 			},
 		},
@@ -285,7 +285,7 @@ func extInconsistentProto(_ *testing.T, rh cache.ResourceEventHandler, c *Sesame
 				{Name: "svc1", Port: 8081},
 			},
 			Protocol: pointer.StringPtr("h2c"),
-			UpstreamValidation: &Sesame_api_v1.UpstreamValidation{
+			UpstreamValidation: &sesame_api_v1.UpstreamValidation{
 				CACertificate: "cacert",
 				SubjectName:   "ext.projectsesame.io",
 			},
@@ -307,7 +307,7 @@ func extInvalidLoadBalancerPolicy(t *testing.T, rh cache.ResourceEventHandler, c
 				{Name: "svc1", Port: 8081},
 				{Name: "svc2", Port: 8082},
 			},
-			LoadBalancerPolicy: &Sesame_api_v1.LoadBalancerPolicy{
+			LoadBalancerPolicy: &sesame_api_v1.LoadBalancerPolicy{
 				Strategy: "Cookie",
 			},
 		},
@@ -342,7 +342,7 @@ func extInvalidLoadBalancerPolicy(t *testing.T, rh cache.ResourceEventHandler, c
 				{Name: "svc1", Port: 8081},
 				{Name: "svc2", Port: 8082},
 			},
-			LoadBalancerPolicy: &Sesame_api_v1.LoadBalancerPolicy{
+			LoadBalancerPolicy: &sesame_api_v1.LoadBalancerPolicy{
 				Strategy: "RequestHash",
 			},
 		},

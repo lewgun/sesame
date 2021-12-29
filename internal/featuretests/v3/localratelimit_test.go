@@ -22,7 +22,7 @@ import (
 	envoy_config_filter_http_local_ratelimit_v3 "github.com/envoyproxy/go-control-plane/envoy/extensions/filters/http/local_ratelimit/v3"
 	envoy_discovery_v3 "github.com/envoyproxy/go-control-plane/envoy/service/discovery/v3"
 	envoy_type_v3 "github.com/envoyproxy/go-control-plane/envoy/type/v3"
-	Sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
+	sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
 	envoy_v3 "github.com/projectsesame/sesame/internal/envoy/v3"
 	"github.com/projectsesame/sesame/internal/fixture"
 	"github.com/projectsesame/sesame/internal/protobuf"
@@ -33,18 +33,18 @@ import (
 )
 
 func filterExists(t *testing.T, rh cache.ResourceEventHandler, c *Sesame) {
-	p := &Sesame_api_v1.HTTPProxy{
+	p := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Namespace: "default",
 			Name:      "proxy1",
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "foo.com",
 			},
-			Routes: []Sesame_api_v1.Route{
+			Routes: []sesame_api_v1.Route{
 				{
-					Services: []Sesame_api_v1.Service{
+					Services: []sesame_api_v1.Service{
 						{
 							Name: "s1",
 							Port: 80,
@@ -65,18 +65,18 @@ func filterExists(t *testing.T, rh cache.ResourceEventHandler, c *Sesame) {
 }
 
 func noRateLimitsDefined(t *testing.T, rh cache.ResourceEventHandler, c *Sesame) {
-	p := &Sesame_api_v1.HTTPProxy{
+	p := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Namespace: "default",
 			Name:      "proxy1",
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "foo.com",
 			},
-			Routes: []Sesame_api_v1.Route{
+			Routes: []sesame_api_v1.Route{
 				{
-					Services: []Sesame_api_v1.Service{
+					Services: []sesame_api_v1.Service{
 						{
 							Name: "s1",
 							Port: 80,
@@ -105,25 +105,25 @@ func noRateLimitsDefined(t *testing.T, rh cache.ResourceEventHandler, c *Sesame)
 }
 
 func vhostRateLimitDefined(t *testing.T, rh cache.ResourceEventHandler, c *Sesame) {
-	p := &Sesame_api_v1.HTTPProxy{
+	p := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Namespace: "default",
 			Name:      "proxy1",
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "foo.com",
-				RateLimitPolicy: &Sesame_api_v1.RateLimitPolicy{
-					Local: &Sesame_api_v1.LocalRateLimitPolicy{
+				RateLimitPolicy: &sesame_api_v1.RateLimitPolicy{
+					Local: &sesame_api_v1.LocalRateLimitPolicy{
 						Requests: 100,
 						Unit:     "minute",
 						Burst:    50,
 					},
 				},
 			},
-			Routes: []Sesame_api_v1.Route{
+			Routes: []sesame_api_v1.Route{
 				{
-					Services: []Sesame_api_v1.Service{
+					Services: []sesame_api_v1.Service{
 						{
 							Name: "s1",
 							Port: 80,
@@ -170,30 +170,30 @@ func vhostRateLimitDefined(t *testing.T, rh cache.ResourceEventHandler, c *Sesam
 }
 
 func routeRateLimitsDefined(t *testing.T, rh cache.ResourceEventHandler, c *Sesame) {
-	p := &Sesame_api_v1.HTTPProxy{
+	p := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Namespace: "default",
 			Name:      "proxy1",
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "foo.com",
 			},
-			Routes: []Sesame_api_v1.Route{
+			Routes: []sesame_api_v1.Route{
 				{
-					Conditions: []Sesame_api_v1.MatchCondition{
+					Conditions: []sesame_api_v1.MatchCondition{
 						{
 							Prefix: "/s1",
 						},
 					},
-					Services: []Sesame_api_v1.Service{
+					Services: []sesame_api_v1.Service{
 						{
 							Name: "s1",
 							Port: 80,
 						},
 					},
-					RateLimitPolicy: &Sesame_api_v1.RateLimitPolicy{
-						Local: &Sesame_api_v1.LocalRateLimitPolicy{
+					RateLimitPolicy: &sesame_api_v1.RateLimitPolicy{
+						Local: &sesame_api_v1.LocalRateLimitPolicy{
 							Requests: 100,
 							Unit:     "minute",
 							Burst:    50,
@@ -201,19 +201,19 @@ func routeRateLimitsDefined(t *testing.T, rh cache.ResourceEventHandler, c *Sesa
 					},
 				},
 				{
-					Conditions: []Sesame_api_v1.MatchCondition{
+					Conditions: []sesame_api_v1.MatchCondition{
 						{
 							Prefix: "/s2",
 						},
 					},
-					Services: []Sesame_api_v1.Service{
+					Services: []sesame_api_v1.Service{
 						{
 							Name: "s2",
 							Port: 80,
 						},
 					},
-					RateLimitPolicy: &Sesame_api_v1.RateLimitPolicy{
-						Local: &Sesame_api_v1.LocalRateLimitPolicy{
+					RateLimitPolicy: &sesame_api_v1.RateLimitPolicy{
+						Local: &sesame_api_v1.LocalRateLimitPolicy{
 							Requests: 5,
 							Unit:     "second",
 							Burst:    1,
@@ -288,37 +288,37 @@ func routeRateLimitsDefined(t *testing.T, rh cache.ResourceEventHandler, c *Sesa
 }
 
 func vhostAndRouteRateLimitsDefined(t *testing.T, rh cache.ResourceEventHandler, c *Sesame) {
-	p := &Sesame_api_v1.HTTPProxy{
+	p := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Namespace: "default",
 			Name:      "proxy1",
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "foo.com",
-				RateLimitPolicy: &Sesame_api_v1.RateLimitPolicy{
-					Local: &Sesame_api_v1.LocalRateLimitPolicy{
+				RateLimitPolicy: &sesame_api_v1.RateLimitPolicy{
+					Local: &sesame_api_v1.LocalRateLimitPolicy{
 						Requests: 100,
 						Unit:     "minute",
 						Burst:    50,
 					},
 				},
 			},
-			Routes: []Sesame_api_v1.Route{
+			Routes: []sesame_api_v1.Route{
 				{
-					Conditions: []Sesame_api_v1.MatchCondition{
+					Conditions: []sesame_api_v1.MatchCondition{
 						{
 							Prefix: "/s1",
 						},
 					},
-					Services: []Sesame_api_v1.Service{
+					Services: []sesame_api_v1.Service{
 						{
 							Name: "s1",
 							Port: 80,
 						},
 					},
-					RateLimitPolicy: &Sesame_api_v1.RateLimitPolicy{
-						Local: &Sesame_api_v1.LocalRateLimitPolicy{
+					RateLimitPolicy: &sesame_api_v1.RateLimitPolicy{
+						Local: &sesame_api_v1.LocalRateLimitPolicy{
 							Requests: 100,
 							Unit:     "minute",
 							Burst:    50,
@@ -326,19 +326,19 @@ func vhostAndRouteRateLimitsDefined(t *testing.T, rh cache.ResourceEventHandler,
 					},
 				},
 				{
-					Conditions: []Sesame_api_v1.MatchCondition{
+					Conditions: []sesame_api_v1.MatchCondition{
 						{
 							Prefix: "/s2",
 						},
 					},
-					Services: []Sesame_api_v1.Service{
+					Services: []sesame_api_v1.Service{
 						{
 							Name: "s2",
 							Port: 80,
 						},
 					},
-					RateLimitPolicy: &Sesame_api_v1.RateLimitPolicy{
-						Local: &Sesame_api_v1.LocalRateLimitPolicy{
+					RateLimitPolicy: &sesame_api_v1.RateLimitPolicy{
+						Local: &sesame_api_v1.LocalRateLimitPolicy{
 							Requests: 5,
 							Unit:     "second",
 							Burst:    1,
@@ -435,30 +435,30 @@ func vhostAndRouteRateLimitsDefined(t *testing.T, rh cache.ResourceEventHandler,
 }
 
 func customResponseCode(t *testing.T, rh cache.ResourceEventHandler, c *Sesame) {
-	p := &Sesame_api_v1.HTTPProxy{
+	p := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Namespace: "default",
 			Name:      "proxy1",
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "foo.com",
 			},
-			Routes: []Sesame_api_v1.Route{
+			Routes: []sesame_api_v1.Route{
 				{
-					Conditions: []Sesame_api_v1.MatchCondition{
+					Conditions: []sesame_api_v1.MatchCondition{
 						{
 							Prefix: "/s1",
 						},
 					},
-					Services: []Sesame_api_v1.Service{
+					Services: []sesame_api_v1.Service{
 						{
 							Name: "s1",
 							Port: 80,
 						},
 					},
-					RateLimitPolicy: &Sesame_api_v1.RateLimitPolicy{
-						Local: &Sesame_api_v1.LocalRateLimitPolicy{
+					RateLimitPolicy: &sesame_api_v1.RateLimitPolicy{
+						Local: &sesame_api_v1.LocalRateLimitPolicy{
 							Requests:           100,
 							Unit:               "minute",
 							Burst:              50,
@@ -508,34 +508,34 @@ func customResponseCode(t *testing.T, rh cache.ResourceEventHandler, c *Sesame) 
 }
 
 func customResponseHeaders(t *testing.T, rh cache.ResourceEventHandler, c *Sesame) {
-	p := &Sesame_api_v1.HTTPProxy{
+	p := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Namespace: "default",
 			Name:      "proxy1",
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "foo.com",
 			},
-			Routes: []Sesame_api_v1.Route{
+			Routes: []sesame_api_v1.Route{
 				{
-					Conditions: []Sesame_api_v1.MatchCondition{
+					Conditions: []sesame_api_v1.MatchCondition{
 						{
 							Prefix: "/s1",
 						},
 					},
-					Services: []Sesame_api_v1.Service{
+					Services: []sesame_api_v1.Service{
 						{
 							Name: "s1",
 							Port: 80,
 						},
 					},
-					RateLimitPolicy: &Sesame_api_v1.RateLimitPolicy{
-						Local: &Sesame_api_v1.LocalRateLimitPolicy{
+					RateLimitPolicy: &sesame_api_v1.RateLimitPolicy{
+						Local: &sesame_api_v1.LocalRateLimitPolicy{
 							Requests: 100,
 							Unit:     "minute",
 							Burst:    50,
-							ResponseHeadersToAdd: []Sesame_api_v1.HeaderValue{
+							ResponseHeadersToAdd: []sesame_api_v1.HeaderValue{
 								{
 									Name:  "header-name-1",
 									Value: "header-value-1",

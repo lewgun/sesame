@@ -1386,7 +1386,7 @@ This section contains information for administrators who wish to apply the Sesam
 
 #### Upgrade to Sesame 1.4.0
 
-Change the Sesame image version to `docker.io/projectsesame/Sesame:v1.4.0`
+Change the Sesame image version to `docker.io/projectsesame/sesame:v1.4.0`
 
 Because there has been a change to Envoy to add a serviceaccount, you need to reapply the Sesame CRDs and RBAC.
 
@@ -1443,7 +1443,7 @@ This section contains information for administrators who wish to apply the Sesam
 
 #### Upgrade to Sesame 1.3.0
 
-Change the Sesame image version to `docker.io/projectsesame/Sesame:v1.3.0`
+Change the Sesame image version to `docker.io/projectsesame/sesame:v1.3.0`
 
 ## Upgrading Sesame 1.2.0 to 1.2.1
 
@@ -1482,7 +1482,7 @@ This section contains information for administrators who wish to apply the Sesam
 
 #### Upgrade to Sesame 1.2.1
 
-Change the Sesame image version to `docker.io/projectsesame/Sesame:v1.2.1`.
+Change the Sesame image version to `docker.io/projectsesame/sesame:v1.2.1`.
 
 #### Upgrade to Envoy 1.13.1
 
@@ -1528,7 +1528,7 @@ This section contains information for administrators who wish to apply the Sesam
 
 #### Upgrade to Sesame 1.2.1
 
-Change the Sesame image version to `docker.io/projectsesame/Sesame:v1.2.1`.
+Change the Sesame image version to `docker.io/projectsesame/sesame:v1.2.1`.
 
 #### Upgrade to Envoy 1.13.1
 
@@ -1571,7 +1571,7 @@ You'll need to re-check where your DNS names are pointing as well, using [Get yo
 **Note:** If you deployed Sesame into a different namespace than `projectsesame` with a standard example, please delete that namespace.
 Then in your editor of choice do a search and replace for `projectsesame` and replace it with your preferred name space and apply the updated manifest.
 
-**Note:** If you are deploying to a cluster where you have previously installed alpha versions of the Sesame API, applying the Sesame CRDs in `examples/Sesame` may fail with a message similar to `Invalid value: "v1alpha1": must appear in spec.versions`. In this case, you need to delete the old CRDs and apply the new ones.
+**Note:** If you are deploying to a cluster where you have previously installed alpha versions of the Sesame API, applying the Sesame CRDs in `examples/sesame` may fail with a message similar to `Invalid value: "v1alpha1": must appear in spec.versions`. In this case, you need to delete the old CRDs and apply the new ones.
 
 ```bash
 $ kubectl delete namespace projectsesame
@@ -1585,7 +1585,7 @@ This section contains information for administrators who wish to apply the Sesam
 
 #### Upgrade to Sesame 1.1.0
 
-Change the Sesame image version to `docker.io/projectsesame/Sesame:v1.1.0`.
+Change the Sesame image version to `docker.io/projectsesame/sesame:v1.1.0`.
 
 #### Upgrade to Envoy 1.12.2
 
@@ -1607,7 +1607,7 @@ This section contains information for administrators who wish to manually upgrad
 
 #### Sesame version
 
-Ensure the Sesame image version is `docker.io/projectsesame/Sesame:v1.0.1`.
+Ensure the Sesame image version is `docker.io/projectsesame/sesame:v1.0.1`.
 
 #### Envoy version
 
@@ -1630,7 +1630,7 @@ If the following are true for you:
  * You are using one of the [example][2] deployments.
  * Your cluster can take few minutes of downtime.
 
-Then the simplest way to upgrade is to delete the `projectsesame` namespace and reapply the `examples/Sesame` sample manifest.
+Then the simplest way to upgrade is to delete the `projectsesame` namespace and reapply the `examples/sesame` sample manifest.
 From the root directory of the repository:
 
 ```bash
@@ -1648,7 +1648,7 @@ This section contains information for administrators who wish to manually upgrad
 
 #### Upgrade to Sesame 1.0.0
 
-Change the Sesame image version to `docker.io/projectsesame/Sesame:v1.0.0`.
+Change the Sesame image version to `docker.io/projectsesame/sesame:v1.0.0`.
 
 Note that as part of sunsetting the Heptio brand, Sesame Docker images have moved from `gcr.io/heptio-images` to `docker.io/projectsesame`.
 
@@ -1851,9 +1851,9 @@ This section contains information for administrators who wish to apply the Sesam
 
 #### Upgrade to Sesame 0.15.3
 
-Due to the sun setting on the Heptio brand, from v0.15.0 onwards our images are now served from the docker hub repository [`docker.io/projectsesame/Sesame`][13]
+Due to the sun setting on the Heptio brand, from v0.15.0 onwards our images are now served from the docker hub repository [`docker.io/projectsesame/sesame`][13]
 
-Change the Sesame image version to `docker.io/projectsesame/Sesame:v0.15.3`.
+Change the Sesame image version to `docker.io/projectsesame/sesame:v0.15.3`.
 
 #### Enabling TLS for gRPC
 
@@ -1930,24 +1930,24 @@ and checking the annotations that store exact details using
 $ kubectl get configmap -n heptio-sesame -o yaml sesame
 ```
 
-[1]: https://github.com/projectsesame/sesame/tree/main/examples/Sesame
+[1]: https://github.com/projectsesame/sesame/tree/main/examples/sesame
 [2]: https://github.com/projectsesame/sesame/blob/v1.0.0/examples
 [3]: /docs/main/config/fundamentals
 [4]: /docs/main/config/annotations
 [5]: https://github.com/projectsesame/sesame/issues/899
 [6]: /docs/main/configuration
-[7]: https://github.com/projectsesame/sesame/blob/main/examples/Sesame/README.md
-[8]: https://github.com/projectsesame/sesame/blob/v1.0.0/examples/Sesame/02-rbac.yaml#L71
-[9]: https://github.com/projectsesame/sesame/blob/main/examples/Sesame/02-rbac.yaml
+[7]: https://github.com/projectsesame/sesame/blob/main/examples/sesame/README.md
+[8]: https://github.com/projectsesame/sesame/blob/v1.0.0/examples/sesame/02-rbac.yaml#L71
+[9]: https://github.com/projectsesame/sesame/blob/main/examples/sesame/02-rbac.yaml
 [10]: https://www.envoyproxy.io/docs/envoy/v1.11.2/intro/version_history
 [11]: https://github.com/projectsesame/sesame/blob/v0.15.3/examples/
 [12]: /docs/main/deploy-options
-[13]: https://hub.docker.com/r/projectsesame/Sesame
+[13]: https://hub.docker.com/r/projectsesame/sesame
 [14]: /docs/main/grpc-tls-howto
 [15]: https://www.envoyproxy.io/docs/envoy/v1.12.2/intro/version_history
 [16]: /getting-started
 [17]: https://www.envoyproxy.io/docs/envoy/v1.13.1/intro/version_history
-[18]: https://projectsesame.io/quickstart/main/Sesame.yaml
+[18]: https://projectsesame.io/quickstart/main/sesame.yaml
 [19]: https://groups.google.com/forum/?utm_medium=email&utm_source=footer#!msg/envoy-announce/sVqmxy0un2s/8aq430xiHAAJ
 [20]: https://www.envoyproxy.io/docs/envoy/v1.14.1/intro/version_history
 [21]: https://www.envoyproxy.io/docs/envoy/v1.14.2/intro/version_history

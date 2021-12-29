@@ -220,9 +220,9 @@ started.
 
 To enable setting header values based on the destination service Sesame also supports:
 
-* `%Sesame_NAMESPACE%`
-* `%Sesame_SERVICE_NAME%`
-* `%Sesame_SERVICE_PORT%`
+* `%SESAME_NAMESPACE%`
+* `%SESAME_SERVICE_NAME%`
+* `%SESAME_SERVICE_PORT%`
 
 For example, with the following HTTPProxy object that has a per-Service requestHeadersPolicy using these variables:
 ```
@@ -244,16 +244,16 @@ spec:
           requestHeadersPolicy:
             set:
             - name: l5d-dst-override
-              value: "%Sesame_SERVICE_NAME%.%Sesame_NAMESPACE%.svc.cluster.local:%Sesame_SERVICE_PORT%"
+              value: "%SESAME_SERVICE_NAME%.%SESAME_NAMESPACE%.svc.cluster.local:%SESAME_SERVICE_PORT%"
 ```
 the values would be:
-* `Sesame_NAMESPACE: "myns"`
-* `Sesame_SERVICE_NAME: "s1"`
-* `Sesame_SERVICE_PORT: "80"`
+* `SESAME_NAMESPACE: "myns"`
+* `SESAME_SERVICE_NAME: "s1"`
+* `SESAME_SERVICE_PORT: "80"`
 
 and the `l5-dst-override` header would be set to `s1.myns.svc.cluster.local:80`.
 
-For per-Route requestHeadersPolicy only `%Sesame_NAMESPACE%` is set and using
-`%Sesame_SERVICE_NAME%` and `%Sesame_SERVICE_PORT%` will end up as the
-literal values `%%Sesame_SERVICE_NAME%%` and `%%Sesame_SERVICE_PORT%%`,
+For per-Route requestHeadersPolicy only `%SESAME_NAMESPACE%` is set and using
+`%SESAME_SERVICE_NAME%` and `%SESAME_SERVICE_PORT%` will end up as the
+literal values `%%SESAME_SERVICE_NAME%%` and `%%SESAME_SERVICE_PORT%%`,
 respectively.

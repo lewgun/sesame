@@ -26,10 +26,10 @@ Follow the linked guide to learn how to troubleshoot issues with [Sesame Operato
 [0]: {{< param github_url >}}/issues
 [1]: {{< param slack_url >}}
 [2]: /docs/{{< param latest_version >}}/troubleshooting/envoy-admin-interface/
-[3]: /docs/{{< param latest_version >}}/troubleshooting/Sesame-debug-log/
+[3]: /docs/{{< param latest_version >}}/troubleshooting/sesame-debug-log/
 [4]: /docs/{{< param latest_version >}}/troubleshooting/envoy-debug-log/
-[5]: /docs/{{< param latest_version >}}/troubleshooting/Sesame-graph/
-[6]: /docs/{{< param latest_version >}}/troubleshooting/Sesame-xds-resources/
+[5]: /docs/{{< param latest_version >}}/troubleshooting/sesame-graph/
+[6]: /docs/{{< param latest_version >}}/troubleshooting/sesame-xds-resources/
 [7]: /docs/{{< param latest_version >}}/troubleshooting/profiling-Sesame/
 [8]: /docs/{{< param latest_version >}}/troubleshooting/operator/
 [9]: https://en.wikipedia.org/wiki/Dot

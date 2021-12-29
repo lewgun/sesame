@@ -59,7 +59,7 @@ Related issues and PRs: #3291
 Thanks to @stevesloka for implementing this feature!
 
 ## Dynamic Service Headers
-Adds support for %Sesame_NAMESPACE%, %Sesame_SERVICE_NAME% and %Sesame_SERVICE_PORT% dynamic variables. These variables will be expanded like the Envoy dynamic variables in #3234. __Note:__ The Sesame_ prefix is used to prevent the clashing with a future Envoy dynamic variable. Variables that can't be expanded are passed through literally.
+Adds support for %SESAME_NAMESPACE%, %SESAME_SERVICE_NAME% and %SESAME_SERVICE_PORT% dynamic variables. These variables will be expanded like the Envoy dynamic variables in #3234. __Note:__ The sesame_ prefix is used to prevent the clashing with a future Envoy dynamic variable. Variables that can't be expanded are passed through literally.
 
 Related issues and PRs: #3269
 
@@ -71,11 +71,11 @@ Thanks to @erwbgy for implementing this feature!
 - Insecure AES128/256 ciphers are disabled by default. See #3304 for additional details.
 - The following Prometheus Gauges have been renamed to make the metric names follow promlint conventions. We encourage operators to have dashboard and alert queries refer to the new names. The old metrics will be removed completely in the next release:
    ```
-   Sesame_httpproxy_total -> Sesame_httpproxy
-   Sesame_httpproxy_invalid_total  -> Sesame_httpproxy_invalid
-   Sesame_httpproxy_orphaned_total  -> Sesame_httpproxy_orphaned
-   Sesame_httpproxy_valid_total  -> Sesame_httpproxy_valid
-   Sesame_httpproxy_root_total  -> Sesame_httpproxy_root
+   sesame_httpproxy_total -> sesame_httpproxy
+   sesame_httpproxy_invalid_total  -> sesame_httpproxy_invalid
+   sesame_httpproxy_orphaned_total  -> sesame_httpproxy_orphaned
+   sesame_httpproxy_valid_total  -> sesame_httpproxy_valid
+   sesame_httpproxy_root_total  -> sesame_httpproxy_root
    ```
 
 # Upgrading

@@ -90,8 +90,8 @@ func testDynamicHeaders(namespace string) {
 			"X-Dynamic-Header-22":             "%UPSTREAM_REMOTE_ADDRESS%",
 			"X-Dynamic-Header-23":             "%RESPONSE_FLAGS%",
 			"X-Dynamic-Header-24":             "%RESPONSE_CODE_DETAILS%",
-			"X-Sesame-Namespace":              "%Sesame_NAMESPACE%",
-			"X-Sesame-Service":                "%Sesame_SERVICE_NAME%:%Sesame_SERVICE_PORT%",
+			"X-Sesame-Namespace":              "%SESAME_NAMESPACE%",
+			"X-Sesame-Service":                "%SESAME_SERVICE_NAME%:%SESAME_SERVICE_PORT%",
 		}
 		for k, v := range requestHeaders {
 			hv := sesamev1.HeaderValue{

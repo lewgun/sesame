@@ -58,7 +58,7 @@ spec:
             - --secrets-format=compact
             - --namespace=$(SESAME_NAMESPACE)
           env:
-            - name: Sesame_NAMESPACE
+            - name: SESAME_NAMESPACE
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace

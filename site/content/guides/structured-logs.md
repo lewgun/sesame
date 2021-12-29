@@ -84,4 +84,4 @@ json-fields:
 [2]: https://github.com/projectsesame/sesame/blob/main/pkg/config/accesslog.go#L49-L93
 [3]: https://github.com/projectsesame/sesame/blob/main/pkg/config/accesslog.go#L97-L102
 [4]: https://github.com/projectsesame/sesame/blob/main/pkg/config/accesslog.go#L4
-[5]: {{< param github_url >}}/tree/{{< param latest_version >}}/examples/Sesame/01-Sesame-config.yaml
+[5]: {{< param github_url >}}/tree/{{< param latest_version >}}/examples/sesame/01-Sesame-config.yaml

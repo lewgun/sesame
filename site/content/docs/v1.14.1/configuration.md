@@ -31,9 +31,9 @@ Many of these flags are mirrored in the [Sesame Configuration File](#configurati
 | `--http-port=<port>`  |    Port the metrics HTTP endpoint will bind to. |
 | `--health-address=<ipaddr>` |   Address the health HTTP endpoint will bind to |
 | `--health-port=<port>` | Port the health HTTP endpoint will bind to |
-| `--Sesame-cafile=</path/to/file\|Sesame_CERT_FILE>` | CA bundle file name for serving gRPC with TLS |
-| `--Sesame-cert-file=</path/to/file\|Sesame_CERT_FILE>`  | Sesame certificate file name for serving gRPC over TLS |
-| `--Sesame-key-file=</path/to/file\|Sesame_KEY_FILE>` | Sesame key file name for serving gRPC over TLS |
+| `--Sesame-cafile=</path/to/file\|SESAME_CERT_FILE>` | CA bundle file name for serving gRPC with TLS |
+| `--Sesame-cert-file=</path/to/file\|SESAME_CERT_FILE>`  | Sesame certificate file name for serving gRPC over TLS |
+| `--Sesame-key-file=</path/to/file\|SESAME_KEY_FILE>` | Sesame key file name for serving gRPC over TLS |
 | `--insecure`  |               Allow serving without TLS secured gRPC |
 | `--root-namespaces=<ns,ns>` | Restrict Sesame to searching these namespaces for root ingress routes |
 | `--ingress-class-name=<name>` | Sesame IngressClass name |
@@ -70,7 +70,7 @@ Where Sesame settings can also be specified with command-line flags, the command
 | disableAllowChunkedLength | boolean | `false` | If this field is true, Sesame will disable the RFC-compliant Envoy behavior to strip the `Content-Length` header if `Transfer-Encoding: chunked` is also set. This is an emergency off-switch to revert back to Envoy's default behavior in case of failures. |
 | disablePermitInsecure | boolean | `false` | If this field is true, Sesame will ignore `PermitInsecure` field in HTTPProxy documents. |
 | envoy-service-name | string | `envoy` | This sets the service name that will be inspected for address details to be applied to Ingress objects. |
-| envoy-service-namespace | string | `projectsesame` | This sets the namespace of the service that will be inspected for address details to be applied to Ingress objects. If the `Sesame_NAMESPACE` environment variable is present, Sesame will populate this field with its value. |
+| envoy-service-namespace | string | `projectsesame` | This sets the namespace of the service that will be inspected for address details to be applied to Ingress objects. If the `SESAME_NAMESPACE` environment variable is present, Sesame will populate this field with its value. |
 | ingress-status-address | string | None | If present, this specifies the address that will be copied into the Ingress status for each Ingress that Sesame manages. It is exclusive with `envoy-service-name` and `envoy-service-namespace`.|
 | incluster | boolean | `false` | This field specifies that Sesame is running in a Kubernetes cluster and should use the in-cluster client access configuration.  |
 | json-fields | string array | [fields][5]| This is the list the field names to include in the JSON [access log format][2]. |
@@ -125,7 +125,7 @@ In the vast majority of deployments, only the `configmap-name` and `configmap-na
 | Field Name | Type | Default | Description |
 |------------|------|---------|-------------|
 | configmap-name | string | `leader-elect` | The name of the ConfigMap that Sesame leader election will lease. |
-| configmap-namespace | string | `projectsesame` | The namespace of the ConfigMap that Sesame leader election will lease. If the `Sesame_NAMESPACE` environment variable is present, Sesame will populate this field with its value. |
+| configmap-namespace | string | `projectsesame` | The namespace of the ConfigMap that Sesame leader election will lease. If the `SESAME_NAMESPACE` environment variable is present, Sesame will populate this field with its value. |
 | lease-duration | [duration][4] | `15s` | The duration of the leadership lease. |
 | renew-deadline | [duration][4] | `10s` | The length of time that the leader will retry refreshing leadership before giving up. |
 | retry-period | [duration][4] | `2s` | The interval at which Sesame will attempt to the acquire leadership lease. |
@@ -369,7 +369,7 @@ data:
     #       # example: the hostname of the Envoy instance that proxied the request
     #       X-Envoy-Hostname: %HOSTNAME%
     #       # example: add a l5d-dst-override header to instruct Linkerd what service the request is destined for
-    #       l5d-dst-override: %Sesame_SERVICE_NAME%.%Sesame_NAMESPACE%.svc.cluster.local:%Sesame_SERVICE_PORT%
+    #       l5d-dst-override: %SESAME_SERVICE_NAME%.%SESAME_NAMESPACE%.svc.cluster.local:%SESAME_SERVICE_PORT%
     #   # default headers to set on all responses (unless set/removed on the HTTPProxy object itself)
     #   response-headers:
     #     set:
@@ -382,16 +382,16 @@ _Note:_ The default example `Sesame` includes this [file][1] for easy deployment
 
 ## Environment Variables
 
-### Sesame_NAMESPACE
+### SESAME_NAMESPACE
 
-If present, the value of the `Sesame_NAMESPACE` environment variable is used as:
+If present, the value of the `SESAME_NAMESPACE` environment variable is used as:
 
 1. The value for the `Sesame bootstrap --namespace` flag unless otherwise specified.
 1. The value for the `Sesame certgen --namespace` flag unless otherwise specified.
 1. The value for the `Sesame serve --envoy-service-namespace` flag unless otherwise specified.
 1. The value for the `leaderelection.configmap-namespace` config file setting for `Sesame serve` unless otherwise specified.
 
-The `Sesame_NAMESPACE` environment variable is set via the [Downward API][6] in the Sesame [example manifests][7].
+The `SESAME_NAMESPACE` environment variable is set via the [Downward API][6] in the Sesame [example manifests][7].
 
 ## Bootstrap Config File
 
@@ -416,19 +416,19 @@ connects to Sesame:
 | <nobr>--envoy-cafile</nobr> | "" | CA filename for Envoy secure xDS gRPC communication.  |
 | <nobr>--envoy-cert-file</nobr> | "" | Client certificate filename for Envoy secure xDS gRPC communication.  |
 | <nobr>--envoy-key-file</nobr> | "" | Client key filename for Envoy secure xDS gRPC communication.  |
-| <nobr>--namespace</nobr> | projectsesame | Namespace the Envoy container will run, also configured via ENV variable "Sesame_NAMESPACE". Namespace is used as part of the metric names on static resources defined in the bootstrap configuration file.    |
+| <nobr>--namespace</nobr> | projectsesame | Namespace the Envoy container will run, also configured via ENV variable "SESAME_NAMESPACE". Namespace is used as part of the metric names on static resources defined in the bootstrap configuration file.    |
 | <nobr>--xds-resource-version</nobr> | v3 | Currently, the only valid xDS API resource version is `v3`.  |
 | <nobr>--dns-lookup-family</nobr> | auto | Defines what DNS Resolution Policy to use for Envoy -> Sesame cluster name lookup. Either v4, v6 or auto.  |
 
 
 
-[1]: {{< param github_url >}}/tree/{{< param version >}}/examples/Sesame/01-Sesame-config.yaml
+[1]: {{< param github_url >}}/tree/{{< param version >}}/examples/sesame/01-Sesame-config.yaml
 [2]: /guides/structured-logs
 [3]: https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 [4]: https://golang.org/pkg/time/#ParseDuration
 [5]: https://godoc.org/github.com/projectsesame/sesame/internal/envoy#DefaultFields
 [6]: https://kubernetes.io/docs/tasks/inject-data-application/environment-variable-expose-pod-information/
-[7]: {{< param github_url>}}/tree/{{< param version >}}/examples/Sesame
+[7]: {{< param github_url>}}/tree/{{< param version >}}/examples/sesame
 [8]: https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/core/v3/protocol.proto#envoy-v3-api-field-config-core-v3-httpprotocoloptions-idle-timeout
 [9]: https://www.envoyproxy.io/docs/envoy/latest/api-v3/extensions/filters/network/http_connection_manager/v3/http_connection_manager.proto#envoy-v3-api-field-extensions-filters-network-http-connection-manager-v3-httpconnectionmanager-stream-idle-timeout
 [10]: https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/core/v3/protocol.proto#envoy-v3-api-field-config-core-v3-httpprotocoloptions-max-connection-duration

@@ -53,7 +53,7 @@ In the vast majority of deployments, only the `configmap-name` and `configmap-na
 | Field Name | Type | Default | Description |
 |------------|------|---------|-------------|
 | configmap-name | string | `leader-elect` | The name of the ConfigMap that Sesame leader election will lease. |
-| configmap-namespace | string | `projectsesame` | The namespace of the ConfigMap that Sesame leader election will lease. If the `Sesame_NAMESPACE` environment variable is present, Sesame will populate this field with its value. |
+| configmap-namespace | string | `projectsesame` | The namespace of the ConfigMap that Sesame leader election will lease. If the `SESAME_NAMESPACE` environment variable is present, Sesame will populate this field with its value. |
 | lease-duration | [duration][4] | `15s` | The duration of the leadership lease. |
 | renew-deadline | [duration][4] | `10s` | The length of time that the leader will retry refreshing leadership before giving up. |
 | retry-period | [duration][4] | `2s` | The interval at which Sesame will attempt to the acquire leadership lease. |
@@ -93,7 +93,7 @@ data:
 
 _Note:_ The default example `Sesame` includes this [file][1] for easy deployment of Sesame.
 
-[1]: {{< param github_url >}}/tree/{{page.version}}/examples/Sesame/01-Sesame-config.yaml
+[1]: {{< param github_url >}}/tree/{{page.version}}/examples/sesame/01-Sesame-config.yaml
 [2]: /guides/structured-logs
 [3]: https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 [4]: https://golang.org/pkg/time/#ParseDuration

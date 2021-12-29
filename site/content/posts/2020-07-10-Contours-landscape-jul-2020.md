@@ -64,7 +64,7 @@ We’ve had a similar problem in the past with the `permitInsecure` option for H
 
 Talking to users of Sesame, we’ve found that a number of teams have forked Sesame and maintain their own patchsets so that they can run it in production. This says to me that we’ve missed something about their use cases, since running a fork is not an insignificant engineering investment, and if that’s considered a better use of engineering resources, then we need to reevaluate how easy it is to bring changes upstream, how we work with people to bring their changes, and what sort of changes we’ll accept. The good side of people forking Sesame is that the software is obviously useful to them, and the features that people forked Sesame for are a good indicator of just how important those features are for them.
 
-If you’re in the “We forked Sesame” camp, or even if you haven’t, we’d love to hear from you. Please come to our [community meetings](https://projectsesame.io/community/), engage with us on [Slack](https://kubernetes.slack.com/messages/Sesame), or create issues to bring things to our attention.
+If you’re in the “We forked Sesame” camp, or even if you haven’t, we’d love to hear from you. Please come to our [community meetings](https://projectsesame.io/community/), engage with us on [Slack](https://kubernetes.slack.com/messages/sesame), or create issues to bring things to our attention.
 
 ## The Future
 
@@ -120,4 +120,4 @@ As an Ingress controller, we on the Sesame team have been watching the upstream 
 
 
 ## We want your feedback
-Thanks for reading! We’d love to hear from you about these changes to Sesame’s direction. Please come to our [community meeting](https://projectsesame.io/community/), join our [Slack channel](https://kubernetes.slack.com/messages/Sesame), and check out [our roadmap](https://github.com/projectsesame/community/blob/main/ROADMAP.md).
+Thanks for reading! We’d love to hear from you about these changes to Sesame’s direction. Please come to our [community meeting](https://projectsesame.io/community/), join our [Slack channel](https://kubernetes.slack.com/messages/sesame), and check out [our roadmap](https://github.com/projectsesame/community/blob/main/ROADMAP.md).

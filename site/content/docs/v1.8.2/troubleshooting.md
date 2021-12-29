@@ -36,9 +36,9 @@ To access it from your workstation use `kubectl port-forward` like so,
 
 ```sh
 # Get one of the pods that matches the Sesame deployment
-Sesame_POD=$(kubectl -n projectsesame get pod -l app=sesame -o name | head -1)
+SESAME_POD=$(kubectl -n projectsesame get pod -l app=sesame -o name | head -1)
 # Do the port forward to that pod
-kubectl -n projectsesame port-forward $Sesame_POD 6060
+kubectl -n projectsesame port-forward $SESAME_POD 6060
 ```
 
 ## Visualizing Sesame's internal directed acyclic graph (DAG)
@@ -50,9 +50,9 @@ To download the graph and save it as a PNG:
 
 ```sh
 # Port forward into the sesame pod
-Sesame_POD=$(kubectl -n projectsesame get pod -l app=sesame -o name | head -1)
+SESAME_POD=$(kubectl -n projectsesame get pod -l app=sesame -o name | head -1)
 # Do the port forward to that pod
-kubectl -n projectsesame port-forward $Sesame_POD 6060
+kubectl -n projectsesame port-forward $SESAME_POD 6060
 # Download and store the DAG in png format
 curl localhost:6060/debug/dag | dot -T png > sesame-dag.png
 ```
@@ -72,9 +72,9 @@ Do this is via `kubectl exec`:
 
 ```sh
 # Get one of the pods that matches the examples/daemonset
-Sesame_POD=$(kubectl -n projectsesame get pod -l app=sesame -o jsonpath='{.items[0].metadata.name}')
+SESAME_POD=$(kubectl -n projectsesame get pod -l app=sesame -o jsonpath='{.items[0].metadata.name}')
 # Do the port forward to that pod
-kubectl -n projectsesame exec $Sesame_POD -c sesame -- sesame cli lds --cafile=/ca/cacert.pem --cert-file=/certs/tls.crt --key-file=/certs/tls.key
+kubectl -n projectsesame exec $SESAME_POD -c sesame -- sesame cli lds --cafile=/ca/cacert.pem --cert-file=/certs/tls.crt --key-file=/certs/tls.key
 ```
 
 Which will stream changes to the LDS api endpoint to your terminal.

@@ -102,7 +102,7 @@ spec:
         command:
         - envoy
         env:
-        - name: Sesame_NAMESPACE
+        - name: SESAME_NAMESPACE
           valueFrom:
             fieldRef:
               apiVersion: v1
@@ -160,7 +160,7 @@ spec:
         command:
         - sesame
         env:
-        - name: Sesame_NAMESPACE
+        - name: SESAME_NAMESPACE
           valueFrom:
             fieldRef:
               apiVersion: v1

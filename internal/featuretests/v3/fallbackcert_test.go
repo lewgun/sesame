@@ -20,7 +20,7 @@ import (
 	envoy_listener_v3 "github.com/envoyproxy/go-control-plane/envoy/config/listener/v3"
 	envoy_tls_v3 "github.com/envoyproxy/go-control-plane/envoy/extensions/transport_sockets/tls/v3"
 	envoy_discovery_v3 "github.com/envoyproxy/go-control-plane/envoy/service/discovery/v3"
-	Sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
+	sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
 	"github.com/projectsesame/sesame/internal/dag"
 	envoy_v3 "github.com/projectsesame/sesame/internal/envoy/v3"
 	"github.com/projectsesame/sesame/internal/featuretests"
@@ -72,16 +72,16 @@ func TestFallbackCertificate(t *testing.T) {
 
 	// Valid HTTPProxy without FallbackCertificate enabled
 	proxy1 := fixture.NewProxy("simple").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "fallback.example.com",
-				TLS: &Sesame_api_v1.TLS{
+				TLS: &sesame_api_v1.TLS{
 					SecretName:                "secret",
 					EnableFallbackCertificate: false,
 				},
 			},
-			Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+			Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: s1.Name,
 					Port: 80,
 				}},
@@ -112,16 +112,16 @@ func TestFallbackCertificate(t *testing.T) {
 
 	// Valid HTTPProxy with FallbackCertificate enabled
 	proxy2 := fixture.NewProxy("simple").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "fallback.example.com",
-				TLS: &Sesame_api_v1.TLS{
+				TLS: &sesame_api_v1.TLS{
 					SecretName:                "secret",
 					EnableFallbackCertificate: true,
 				},
 			},
-			Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+			Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: s1.Name,
 					Port: 80,
 				}},
@@ -136,13 +136,13 @@ func TestFallbackCertificate(t *testing.T) {
 		TypeUrl:   listenerType,
 	})
 
-	certDelegationAll := &Sesame_api_v1.TLSCertificateDelegation{
+	certDelegationAll := &sesame_api_v1.TLSCertificateDelegation{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "fallbackcertdelegation",
 			Namespace: "admin",
 		},
-		Spec: Sesame_api_v1.TLSCertificateDelegationSpec{
-			Delegations: []Sesame_api_v1.CertificateDelegation{{
+		Spec: sesame_api_v1.TLSCertificateDelegationSpec{
+			Delegations: []sesame_api_v1.CertificateDelegation{{
 				SecretName:       "fallbacksecret",
 				TargetNamespaces: []string{"*"},
 			}},
@@ -180,13 +180,13 @@ func TestFallbackCertificate(t *testing.T) {
 		TypeUrl:   listenerType,
 	})
 
-	certDelegationSingle := &Sesame_api_v1.TLSCertificateDelegation{
+	certDelegationSingle := &sesame_api_v1.TLSCertificateDelegation{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "fallbackcertdelegation",
 			Namespace: "admin",
 		},
-		Spec: Sesame_api_v1.TLSCertificateDelegationSpec{
-			Delegations: []Sesame_api_v1.CertificateDelegation{{
+		Spec: sesame_api_v1.TLSCertificateDelegationSpec{
+			Delegations: []sesame_api_v1.CertificateDelegation{{
 				SecretName:       "fallbacksecret",
 				TargetNamespaces: []string{"default"},
 			}},
@@ -217,19 +217,19 @@ func TestFallbackCertificate(t *testing.T) {
 
 	// Invalid HTTPProxy with FallbackCertificate enabled along with ClientValidation
 	proxy3 := fixture.NewProxy("simple").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "fallback.example.com",
-				TLS: &Sesame_api_v1.TLS{
+				TLS: &sesame_api_v1.TLS{
 					SecretName:                "secret",
 					EnableFallbackCertificate: true,
-					ClientValidation: &Sesame_api_v1.DownstreamValidation{
+					ClientValidation: &sesame_api_v1.DownstreamValidation{
 						CACertificate: "something",
 					},
 				},
 			},
-			Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+			Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: s1.Name,
 					Port: 80,
 				}},
@@ -245,16 +245,16 @@ func TestFallbackCertificate(t *testing.T) {
 
 	// Valid HTTPProxy with FallbackCertificate enabled
 	proxy4 := fixture.NewProxy("simple-two").WithSpec(
-		Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "anotherfallback.example.com",
-				TLS: &Sesame_api_v1.TLS{
+				TLS: &sesame_api_v1.TLS{
 					SecretName:                "secret",
 					EnableFallbackCertificate: true,
 				},
 			},
-			Routes: []Sesame_api_v1.Route{{
-				Services: []Sesame_api_v1.Service{{
+			Routes: []sesame_api_v1.Route{{
+				Services: []sesame_api_v1.Service{{
 					Name: s1.Name,
 					Port: 80,
 				}},

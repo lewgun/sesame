@@ -23,7 +23,6 @@ import (
 	"os"
 	"testing"
 
-	. "github.com/onsi/ginkgo"
 	"github.com/projectsesame/sesame/test/e2e"
 	"github.com/stretchr/testify/require"
 	networking_v1 "k8s.io/api/networking/v1"
@@ -43,8 +42,8 @@ func TestUpgrade(t *testing.T) {
 }
 
 var _ = BeforeSuite(func() {
-	SesameUpgradeFromVersion = os.Getenv("Sesame_UPGRADE_FROM_VERSION")
-	require.NotEmpty(f.T(), SesameUpgradeFromVersion, "Sesame_UPGRADE_FROM_VERSION environment variable not supplied")
+	SesameUpgradeFromVersion = os.Getenv("SESAME_UPGRADE_FROM_VERSION")
+	require.NotEmpty(f.T(), SesameUpgradeFromVersion, "SESAME_UPGRADE_FROM_VERSION environment variable not supplied")
 	By("Testing Sesame upgrade from " + SesameUpgradeFromVersion)
 
 	// We should be running in a multi-node cluster with a proper load

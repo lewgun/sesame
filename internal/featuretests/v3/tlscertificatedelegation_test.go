@@ -18,7 +18,7 @@ import (
 
 	envoy_listener_v3 "github.com/envoyproxy/go-control-plane/envoy/config/listener/v3"
 	envoy_discovery_v3 "github.com/envoyproxy/go-control-plane/envoy/service/discovery/v3"
-	Sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
+	sesame_api_v1 "github.com/projectsesame/sesame/apis/projectsesame/v1"
 	envoy_v3 "github.com/projectsesame/sesame/internal/envoy/v3"
 	"github.com/projectsesame/sesame/internal/featuretests"
 	"github.com/projectsesame/sesame/internal/fixture"
@@ -55,23 +55,23 @@ func TestTLSCertificateDelegation(t *testing.T) {
 	rh.OnAdd(s1)
 
 	// add an httpproxy in a different namespace mentioning secret/wildcard.
-	p1 := &Sesame_api_v1.HTTPProxy{
+	p1 := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "simple",
 			Namespace: s1.Namespace,
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "example.com",
-				TLS: &Sesame_api_v1.TLS{
+				TLS: &sesame_api_v1.TLS{
 					SecretName: sec1.Namespace + "/" + sec1.Name,
 				},
 			},
-			Routes: []Sesame_api_v1.Route{{
-				Conditions: []Sesame_api_v1.MatchCondition{{
+			Routes: []sesame_api_v1.Route{{
+				Conditions: []sesame_api_v1.MatchCondition{{
 					Prefix: "/",
 				}},
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: s1.Name,
 					Port: 8080,
 				}},
@@ -89,13 +89,13 @@ func TestTLSCertificateDelegation(t *testing.T) {
 	})
 
 	// t1 is a TLSCertificateDelegation that permits default to access secret/wildcard
-	t1 := &Sesame_api_v1.TLSCertificateDelegation{
+	t1 := &sesame_api_v1.TLSCertificateDelegation{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "delegation",
 			Namespace: sec1.Namespace,
 		},
-		Spec: Sesame_api_v1.TLSCertificateDelegationSpec{
-			Delegations: []Sesame_api_v1.CertificateDelegation{{
+		Spec: sesame_api_v1.TLSCertificateDelegationSpec{
+			Delegations: []sesame_api_v1.CertificateDelegation{{
 				SecretName: sec1.Name,
 				TargetNamespaces: []string{
 					s1.Namespace,
@@ -129,13 +129,13 @@ func TestTLSCertificateDelegation(t *testing.T) {
 	})
 
 	// t2 is a TLSCertificateDelegation that permits access to secret/wildcard from all namespaces.
-	t2 := &Sesame_api_v1.TLSCertificateDelegation{
+	t2 := &sesame_api_v1.TLSCertificateDelegation{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "delegation",
 			Namespace: sec1.Namespace,
 		},
-		Spec: Sesame_api_v1.TLSCertificateDelegationSpec{
-			Delegations: []Sesame_api_v1.CertificateDelegation{{
+		Spec: sesame_api_v1.TLSCertificateDelegationSpec{
+			Delegations: []sesame_api_v1.CertificateDelegation{{
 				SecretName: sec1.Name,
 				TargetNamespaces: []string{
 					"*",
@@ -155,13 +155,13 @@ func TestTLSCertificateDelegation(t *testing.T) {
 	})
 
 	// t3 is a TLSCertificateDelegation that permits access to secret/different all namespaces.
-	t3 := &Sesame_api_v1.TLSCertificateDelegation{
+	t3 := &sesame_api_v1.TLSCertificateDelegation{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "delegation",
 			Namespace: sec1.Namespace,
 		},
-		Spec: Sesame_api_v1.TLSCertificateDelegationSpec{
-			Delegations: []Sesame_api_v1.CertificateDelegation{{
+		Spec: sesame_api_v1.TLSCertificateDelegationSpec{
+			Delegations: []sesame_api_v1.CertificateDelegation{{
 				SecretName: "different",
 				TargetNamespaces: []string{
 					"*",
@@ -179,13 +179,13 @@ func TestTLSCertificateDelegation(t *testing.T) {
 	})
 
 	// t4 is a TLSCertificateDelegation that permits access to secret/wildcard from the kube-secret namespace.
-	t4 := &Sesame_api_v1.TLSCertificateDelegation{
+	t4 := &sesame_api_v1.TLSCertificateDelegation{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "delegation",
 			Namespace: sec1.Namespace,
 		},
-		Spec: Sesame_api_v1.TLSCertificateDelegationSpec{
-			Delegations: []Sesame_api_v1.CertificateDelegation{{
+		Spec: sesame_api_v1.TLSCertificateDelegationSpec{
+			Delegations: []sesame_api_v1.CertificateDelegation{{
 				SecretName: sec1.Name,
 				TargetNamespaces: []string{
 					"kube-secret",
@@ -206,21 +206,21 @@ func TestTLSCertificateDelegation(t *testing.T) {
 	rh.OnDelete(t4)
 
 	// add a httpproxy in a different namespace mentioning secret/wildcard.
-	hp1 := &Sesame_api_v1.HTTPProxy{
+	hp1 := &sesame_api_v1.HTTPProxy{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "simple",
 			Namespace: s1.Namespace,
 		},
-		Spec: Sesame_api_v1.HTTPProxySpec{
-			VirtualHost: &Sesame_api_v1.VirtualHost{
+		Spec: sesame_api_v1.HTTPProxySpec{
+			VirtualHost: &sesame_api_v1.VirtualHost{
 				Fqdn: "example.com",
-				TLS: &Sesame_api_v1.TLS{
+				TLS: &sesame_api_v1.TLS{
 					SecretName: sec1.Namespace + "/" + sec1.Name,
 				},
 			},
-			Routes: []Sesame_api_v1.Route{{
+			Routes: []sesame_api_v1.Route{{
 				Conditions: matchconditions(prefixMatchCondition("/")),
-				Services: []Sesame_api_v1.Service{{
+				Services: []sesame_api_v1.Service{{
 					Name: s1.Name,
 					Port: 8080,
 				}},
@@ -237,13 +237,13 @@ func TestTLSCertificateDelegation(t *testing.T) {
 		TypeUrl: listenerType,
 	})
 
-	t5 := &Sesame_api_v1.TLSCertificateDelegation{
+	t5 := &sesame_api_v1.TLSCertificateDelegation{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "delegation",
 			Namespace: sec1.Namespace,
 		},
-		Spec: Sesame_api_v1.TLSCertificateDelegationSpec{
-			Delegations: []Sesame_api_v1.CertificateDelegation{{
+		Spec: sesame_api_v1.TLSCertificateDelegationSpec{
+			Delegations: []sesame_api_v1.CertificateDelegation{{
 				SecretName: sec1.Name,
 				TargetNamespaces: []string{
 					s1.Namespace,

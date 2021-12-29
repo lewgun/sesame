@@ -13,7 +13,7 @@ This group is open to contributors of all levels, the only requirement is being 
 Whenever you’re available to join, come say hi using either method:
 
 - Join the [Sesame Office Hours Zoom](https://zoom.us/j/96698475744?pwd=KzVUd3BZSWI2bWIxTmhjZ2d5QVcxUT09) every 1st and 3rd Thursday at 1-2pm ET / 10am-11pm PT and introduce yourself
-- On the [Kubernetes Slack workspace](https://slack.k8s.io/), join the [#Sesame](https://kubernetes.slack.com/messages/Sesame) channel and introduce yourself
+- On the [Kubernetes Slack workspace](https://slack.k8s.io/), join the [#Sesame](https://kubernetes.slack.com/messages/sesame) channel and introduce yourself
 
 When you introduce yourself, let us know:
 

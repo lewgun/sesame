@@ -17,6 +17,7 @@ package v3
 
 import (
 	"context"
+	"github.com/projectsesame/sesame/internal/sesame"
 	"math/rand"
 	"net"
 	"sort"
@@ -44,7 +45,7 @@ import (
 	"github.com/projectsesame/sesame/internal/status"
 	"github.com/projectsesame/sesame/internal/workgroup"
 	"github.com/projectsesame/sesame/internal/xds"
-	Sesame_xds_v3 "github.com/projectsesame/sesame/internal/xds/v3"
+	sesame_xds_v3 "github.com/projectsesame/sesame/internal/xds/v3"
 	"github.com/projectsesame/sesame/internal/xdscache"
 	xdscache_v3 "github.com/projectsesame/sesame/internal/xdscache/v3"
 	"github.com/prometheus/client_golang/prometheus"
@@ -125,14 +126,14 @@ func setup(t *testing.T, opts ...interface{}) (cache.ResourceEventHandler, *Sesa
 	}
 
 	statusUpdateCacher := &k8s.StatusUpdateCacher{}
-	eh := Sesame.NewEventHandler(Sesame.EventHandlerConfig{
+	eh := sesame.NewEventHandler(sesame.EventHandlerConfig{
 		Logger:        log,
 		StatusUpdater: statusUpdateCacher,
 		//nolint:gosec
 		HoldoffDelay: time.Duration(rand.Intn(100)) * time.Millisecond,
 		//nolint:gosec
 		HoldoffMaxDelay: time.Duration(rand.Intn(500)) * time.Millisecond,
-		Observer: Sesame.NewRebuildMetricsObserver(
+		Observer: sesame.NewRebuildMetricsObserver(
 			metrics.NewMetrics(registry),
 			dag.ComposeObservers(xdscache.ObserversOf(resources)...),
 		),
@@ -143,7 +144,7 @@ func setup(t *testing.T, opts ...interface{}) (cache.ResourceEventHandler, *Sesa
 	require.NoError(t, err)
 
 	srv := xds.NewServer(registry)
-	Sesame_xds_v3.RegisterServer(Sesame_xds_v3.NewSesameServer(log, xdscache.ResourcesOf(resources)...), srv)
+	sesame_xds_v3.RegisterServer(sesame_xds_v3.NewSesameServer(log, xdscache.ResourcesOf(resources)...), srv)
 
 	var g workgroup.Group
 
